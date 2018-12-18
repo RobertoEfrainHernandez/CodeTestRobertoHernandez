@@ -16,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        setRootWindow()
         return true
+    }
+    
+    fileprivate func setRootWindow() {
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        let nav = UINavigationController(rootViewController: ContactsController())
+        window?.rootViewController = nav
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
