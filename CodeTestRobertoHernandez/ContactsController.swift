@@ -20,12 +20,19 @@ class ContactsController: UITableViewController {
         return .lightContent
     }
 
+    //MARK:- Setup Methods
+    
     fileprivate func setNavAttributes() {
         let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : #colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1)]
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
+    }
+    
+    @objc fileprivate func handleAdd() {
         
     }
     
@@ -33,6 +40,7 @@ class ContactsController: UITableViewController {
         let searchController = UISearchController(searchResultsController: nil)
         //Table View Attributes
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = #colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1)
         //Search Attributes
@@ -46,6 +54,22 @@ class ContactsController: UITableViewController {
     }
 
 }
+
+//MARK:- Table View Methods
+
+extension ContactsController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = ContactsCell(style: .default, reuseIdentifier: nil)
+        
+        return cell
+    }
+}
+
+//MARK:- Search Bar Methods
 
 extension ContactsController: UISearchBarDelegate, UISearchControllerDelegate {
     
