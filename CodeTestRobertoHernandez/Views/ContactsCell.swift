@@ -51,8 +51,8 @@ class ContactsCell: UITableViewCell {
     var contact: Contact? {
         didSet {
             let name = contact?.name ?? "John Doe"
-            let phone = contact?.phoneNums.first ?? "No phone number"
-            let email = contact?.email.first ?? "No emails"
+            let phone = contact?.phoneNums.first?.phoneNumber ?? "No phone number"
+            let email = contact?.emails.first?.email ?? "No emails"
             let color = UIColor(hexString: contact?.color ?? "3182D9")
             
             nameLabel.text = name

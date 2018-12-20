@@ -13,6 +13,6 @@ class Contact: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var birthday: String = ""
     @objc dynamic var color: String = ""
-    let email = List<String>()
-    let phoneNums = List<String>()
+    let emails = List<Email>()
+    let phoneNums = List<Phone>()
 }

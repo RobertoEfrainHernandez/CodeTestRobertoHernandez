@@ -46,9 +46,13 @@ struct AddContactPresenter {
         
         let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
             let newContact = Contact()
+            let newPhone = Phone()
+            let newEmail = Email()
+            newPhone.phoneNumber = phoneField.text!
+            newEmail.email = emailField.text!
             newContact.name = "\(firstNameField.text!) \(lastNameField.text!)"
-            newContact.phoneNums.append(phoneField.text!)
-            newContact.email.append(emailField.text!)
+            newContact.phoneNums.append(newPhone)
+            newContact.emails.append(newEmail)
             newContact.color = UIColor.randomFlat.hexValue()
             self.handler(newContact)
         }
