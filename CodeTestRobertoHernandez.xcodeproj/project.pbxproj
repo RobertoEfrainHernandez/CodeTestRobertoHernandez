@@ -17,6 +17,10 @@
 		57E1609321C9829A00DB9E8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57E1609121C9829A00DB9E8F /* LaunchScreen.storyboard */; };
 		57E1609B21C984F000DB9E8F /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1609A21C984F000DB9E8F /* UIView+Extensions.swift */; };
 		57E1609F21C9932E00DB9E8F /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */; };
+		57E5F0A621CB18AE00CAB8D0 /* AddContactPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5F0A521CB18AE00CAB8D0 /* AddContactPresenter.swift */; };
+		57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */; };
+		57F6E64821CAC63F00F8FD3E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6E64721CAC63F00F8FD3E /* Contact.swift */; };
+		C4209ED3328FE45166B82A2D /* Pods_CodeTestRobertoHernandez.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67310C073ABB9CDE1F328D69 /* Pods_CodeTestRobertoHernandez.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,12 @@
 		57E1609421C9829A00DB9E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57E1609A21C984F000DB9E8F /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
+		57E5F0A521CB18AE00CAB8D0 /* AddContactPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactPresenter.swift; sourceTree = "<group>"; };
+		57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
+		57F6E64721CAC63F00F8FD3E /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		67310C073ABB9CDE1F328D69 /* Pods_CodeTestRobertoHernandez.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeTestRobertoHernandez.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		774CDABBC1F2C193E7C32F4D /* Pods-CodeTestRobertoHernandez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeTestRobertoHernandez.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez.release.xcconfig"; sourceTree = "<group>"; };
+		7CDD5FFFCE513722EF0A55F5 /* Pods-CodeTestRobertoHernandez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeTestRobertoHernandez.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,18 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4209ED3328FE45166B82A2D /* Pods_CodeTestRobertoHernandez.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27F2A80D2CE1BBD62B130373 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7CDD5FFFCE513722EF0A55F5 /* Pods-CodeTestRobertoHernandez.debug.xcconfig */,
+				774CDABBC1F2C193E7C32F4D /* Pods-CodeTestRobertoHernandez.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		576CA25221CA421800A64823 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				576CA24C21CA324000A64823 /* ContactsCell.swift */,
 				576CA24E21CA3E1200A64823 /* IconImageView.swift */,
 				576CA25021CA3E7000A64823 /* ContainerView.swift */,
+				57E5F0A521CB18AE00CAB8D0 /* AddContactPresenter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -60,6 +81,8 @@
 			children = (
 				57E1608721C9829800DB9E8F /* CodeTestRobertoHernandez */,
 				57E1608621C9829800DB9E8F /* Products */,
+				27F2A80D2CE1BBD62B130373 /* Pods */,
+				6C9A462C692A254A423B5EA7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,8 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				57E1608821C9829800DB9E8F /* AppDelegate.swift */,
-				57E1608A21C9829800DB9E8F /* ContactsController.swift */,
+				57F6E64621CAC62A00F8FD3E /* Model */,
 				576CA25221CA421800A64823 /* Views */,
+				57F6E64921CAC74D00F8FD3E /* Controllers */,
 				57E160A021C998F000DB9E8F /* Extensions */,
 				57E1608C21C9829800DB9E8F /* Main.storyboard */,
 				57E1608F21C9829A00DB9E8F /* Assets.xcassets */,
@@ -91,8 +115,33 @@
 			children = (
 				57E1609A21C984F000DB9E8F /* UIView+Extensions.swift */,
 				57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */,
+				57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		57F6E64621CAC62A00F8FD3E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				57F6E64721CAC63F00F8FD3E /* Contact.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		57F6E64921CAC74D00F8FD3E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				57E1608A21C9829800DB9E8F /* ContactsController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6C9A462C692A254A423B5EA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				67310C073ABB9CDE1F328D69 /* Pods_CodeTestRobertoHernandez.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,9 +151,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57E1609721C9829A00DB9E8F /* Build configuration list for PBXNativeTarget "CodeTestRobertoHernandez" */;
 			buildPhases = (
+				9DFAD5419B176B5EBFEC2343 /* [CP] Check Pods Manifest.lock */,
 				57E1608121C9829800DB9E8F /* Sources */,
 				57E1608221C9829800DB9E8F /* Frameworks */,
 				57E1608321C9829800DB9E8F /* Resources */,
+				279B791D66BE2862FFAEAB9F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -161,18 +212,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		279B791D66BE2862FFAEAB9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9DFAD5419B176B5EBFEC2343 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CodeTestRobertoHernandez-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		57E1608121C9829800DB9E8F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */,
 				57E1609B21C984F000DB9E8F /* UIView+Extensions.swift in Sources */,
 				57E1608B21C9829800DB9E8F /* ContactsController.swift in Sources */,
 				576CA24D21CA324000A64823 /* ContactsCell.swift in Sources */,
 				57E1608921C9829800DB9E8F /* AppDelegate.swift in Sources */,
+				57F6E64821CAC63F00F8FD3E /* Contact.swift in Sources */,
 				57E1609F21C9932E00DB9E8F /* UINavigationController+Extensions.swift in Sources */,
 				576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */,
 				576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */,
+				57E5F0A621CB18AE00CAB8D0 /* AddContactPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +413,7 @@
 		};
 		57E1609821C9829A00DB9E8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CDD5FFFCE513722EF0A55F5 /* Pods-CodeTestRobertoHernandez.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -334,6 +432,7 @@
 		};
 		57E1609921C9829A00DB9E8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 774CDABBC1F2C193E7C32F4D /* Pods-CodeTestRobertoHernandez.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

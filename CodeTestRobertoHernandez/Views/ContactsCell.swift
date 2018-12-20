@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class ContactsCell: UITableViewCell {
     
@@ -28,37 +29,51 @@ class ContactsCell: UITableViewCell {
     
     fileprivate let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 22, weight: .heavy)
-        label.textColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
-        label.text = "Roberto Hernandez"
+        label.font = .systemFont(ofSize: 25, weight: .heavy)
         return label
     }()
     
     fileprivate let phoneLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .regular)
-        label.text = "516-216-0467"
         return label
     }()
     
     fileprivate let emailLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .regular)
-        label.text = "reh9019@gmail.com"
         return label
     }()
     
     lazy var phoneStack = UIStackView(arrangedSubviews: [phoneImageView, phoneLabel])
     lazy var emailStack = UIStackView(arrangedSubviews: [emailImageView, emailLabel])
+    
+    var contact: Contact? {
+        didSet {
+            let name = contact?.name ?? "John Doe"
+            let phone = contact?.phoneNums.first ?? "No phone number"
+            let email = contact?.email.first ?? "No emails"
+            let color = UIColor(hexString: contact?.color ?? "3182D9")
+            
+            nameLabel.text = name
+            phoneLabel.text = phone
+            emailLabel.text = email
+            
+            containerView.backgroundColor = color
+            nameLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
+            phoneLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
+            emailLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
+        selectionStyle = .none
         setLayout()
     }
     
     fileprivate func setLayout() {
-        containerView.backgroundColor = .red
         addSubview(containerView)
         containerView.fillSuperview(padding: .init(top: padding, left: padding, bottom: padding, right: padding))
         
@@ -67,7 +82,7 @@ class ContactsCell: UITableViewCell {
         [mainStack, phoneStack, emailStack].forEach({ $0.spacing = spacing })
         
         containerView.addSubview(mainStack)
-        mainStack.fillSuperview(padding: .init(top: padding, left: padding, bottom: padding, right: padding))
+        mainStack.fillSuperview(padding: .init(top: padding * 2, left: padding * 2, bottom: padding * 2, right: padding * 2))
         
     }
     

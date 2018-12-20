@@ -12,10 +12,10 @@ class ContainerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.cornerRadius = 6
-        layer.shadowRadius = 6
+        layer.cornerRadius = 12
+        layer.shadowRadius = 8
         layer.shadowOpacity = 0.4
-        layer.shadowOffset = CGSize(width: 6, height: 6)
+        layer.shadowOffset = CGSize(width: 8, height: 8)
     }
     
     required init?(coder aDecoder: NSCoder) {
