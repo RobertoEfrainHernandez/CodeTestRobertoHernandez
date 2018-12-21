@@ -154,8 +154,8 @@ extension ContactsController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? ContactsCell {
-            cell.containerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            cell.containerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            UIView.animate(withDuration: 0.4, delay: 0.4, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 cell.containerView.transform = .identity
             })
         }

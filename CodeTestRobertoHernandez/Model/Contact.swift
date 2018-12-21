@@ -15,4 +15,5 @@ class Contact: Object {
     @objc dynamic var color: String = ""
     let emails = List<Email>()
     let phoneNums = List<Phone>()
+    let addresses = List<Address>()
 }
