@@ -13,7 +13,9 @@ class ContactsCell: UITableViewCell {
     
     fileprivate let padding: CGFloat = 16
     fileprivate let spacing: CGFloat = 8
-    fileprivate let containerView = ContainerView()
+    let containerView = ContainerView()
+    fileprivate let innerView = UIView()
+    fileprivate let gradient = CAGradientLayer()
     
     fileprivate let phoneImageView: UIImageView = {
         let iv = IconImageView(size: 20)
@@ -53,16 +55,16 @@ class ContactsCell: UITableViewCell {
             let name = contact?.name ?? "John Doe"
             let phone = contact?.phoneNums.first?.phoneNumber ?? "No phone number"
             let email = contact?.emails.first?.email ?? "No emails"
-            let color = UIColor(hexString: contact?.color ?? "3182D9")
-            
+            let color = UIColor(hexString: contact?.color ?? "008B8B")!
+            let contrast = ContrastColorOf(color, returnFlat: true)
+            insertGradient(color, contrast)
             nameLabel.text = name
             phoneLabel.text = phone
             emailLabel.text = email
             
-            containerView.backgroundColor = color
-            nameLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
-            phoneLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
-            emailLabel.textColor = ContrastColorOf(color ?? .white, returnFlat: true)
+            nameLabel.textColor = contrast
+            phoneLabel.textColor = contrast
+            emailLabel.textColor = contrast
         }
     }
 
@@ -74,18 +76,34 @@ class ContactsCell: UITableViewCell {
     }
     
     fileprivate func setLayout() {
+        innerView.layer.cornerRadius = 12
+        innerView.clipsToBounds = true
         addSubview(containerView)
         containerView.fillSuperview(padding: .init(top: padding, left: padding, bottom: padding, right: padding))
+        containerView.addSubview(innerView)
+        innerView.fillSuperview()
         
         let mainStack = UIStackView(arrangedSubviews: [nameLabel, phoneStack, emailStack])
         mainStack.axis = .vertical
         [mainStack, phoneStack, emailStack].forEach({ $0.spacing = spacing })
         
-        containerView.addSubview(mainStack)
+        innerView.addSubview(mainStack)
         mainStack.fillSuperview(padding: .init(top: padding * 2, left: padding * 2, bottom: padding * 2, right: padding * 2))
         
     }
     
+    fileprivate func insertGradient(_ color: UIColor, _ contrast: UIColor) {
+        let leftColor = color.cgColor
+        let rightColor = contrast.cgColor
+        gradient.colors = [leftColor, rightColor]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 2, y: 1.2)
+        innerView.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    override func layoutSubviews() {
+        gradient.frame = bounds
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

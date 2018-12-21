@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5512673D2D08ECF0A9CCA7F9 /* Pods_CodeTestRobertoHernandez.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84FB1A98AB0698F1A71CDDE /* Pods_CodeTestRobertoHernandez.framework */; };
+		570D4FFE21CC63A4002E12A1 /* ContactInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570D4FFD21CC63A4002E12A1 /* ContactInfoController.swift */; };
 		576CA24D21CA324000A64823 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA24C21CA324000A64823 /* ContactsCell.swift */; };
 		576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA24E21CA3E1200A64823 /* IconImageView.swift */; };
 		576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA25021CA3E7000A64823 /* ContainerView.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		570D4FFD21CC63A4002E12A1 /* ContactInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoController.swift; sourceTree = "<group>"; };
 		576CA24C21CA324000A64823 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		576CA24E21CA3E1200A64823 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		576CA25021CA3E7000A64823 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				57E1608A21C9829800DB9E8F /* ContactsController.swift */,
+				570D4FFD21CC63A4002E12A1 /* ContactInfoController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				576CA24D21CA324000A64823 /* ContactsCell.swift in Sources */,
 				57E1608921C9829800DB9E8F /* AppDelegate.swift in Sources */,
 				57F6E64821CAC63F00F8FD3E /* Contact.swift in Sources */,
+				570D4FFE21CC63A4002E12A1 /* ContactInfoController.swift in Sources */,
 				57E1609F21C9932E00DB9E8F /* UINavigationController+Extensions.swift in Sources */,
 				576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */,
 				576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */,

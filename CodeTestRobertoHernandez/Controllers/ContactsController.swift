@@ -15,6 +15,7 @@ class ContactsController: UITableViewController {
     fileprivate let realm = try! Realm()
     fileprivate var contacts : Results<Contact>?
     fileprivate var searchResults : Results<Contact>?
+    fileprivate let contrast = ContrastColorOf(#colorLiteral(red: 0, green: 0, blue: 0.2901960784, alpha: 1), returnFlat: true)
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
@@ -68,13 +69,13 @@ class ContactsController: UITableViewController {
     
     /* Set Up UI for NavBar and Search */
     fileprivate func setNavAttributes() {
-        let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : ContrastColorOf(#colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1), returnFlat: true)]
+        let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : contrast]
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
-        navigationController?.navigationBar.tintColor = ContrastColorOf(#colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1), returnFlat: true)
+        navigationController?.navigationBar.tintColor = contrast
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
     }
     
@@ -85,8 +86,8 @@ class ContactsController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
-        searchController.searchBar.barTintColor = #colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1)
-        searchController.searchBar.tintColor = ContrastColorOf(#colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1), returnFlat: true)
+        searchController.searchBar.barTintColor = contrast
+        searchController.searchBar.tintColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
         searchController.searchBar.searchBarStyle = .minimal
         
         //Table View Attributes
@@ -97,7 +98,14 @@ class ContactsController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.keyboardDismissMode = .interactive
-        tableView.backgroundColor = #colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1)
+        tableView.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.5019607843, alpha: 1)
+    }
+    
+    fileprivate func showContactInfo(_ indexPath: IndexPath) {
+        let contact = searchResults?[indexPath.row]
+        let contactInfo = ContactInfoController()
+        contactInfo.contact = contact
+        navigationController?.pushViewController(contactInfo, animated: true)
     }
 
 }
@@ -141,6 +149,25 @@ extension ContactsController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if let contacts = contacts {
            delete(contact: contacts[indexPath.row])
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ContactsCell {
+            cell.containerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                cell.containerView.transform = .identity
+            })
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchController.isActive {
+            searchController.dismiss(animated: true) {
+                self.showContactInfo(indexPath)
+            }
+        } else {
+            showContactInfo(indexPath)
         }
     }
 }

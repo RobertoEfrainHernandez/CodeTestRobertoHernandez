@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class ContainerView: UIView {
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 12
