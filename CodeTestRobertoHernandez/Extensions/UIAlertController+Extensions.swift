@@ -9,15 +9,21 @@
 import UIKit
 
 extension UIAlertController {
-    @objc func handleTextChanged() {
-        if let first = textFields?[0].text, let last = textFields?[1].text, let phone = textFields?[2].text, let email = textFields?[3].text, let action = actions.last {
-            action.isEnabled = !first.isEmpty && !last.isEmpty && !phone.isEmpty && !email.isEmpty
+    @objc func handleMultipleTextChanged() {
+        if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let text3 = textFields?[2].text, let text4 = textFields?[3].text, let action = actions.last {
+            action.isEnabled = !text1.isEmpty && !text2.isEmpty && !text3.isEmpty && !text4.isEmpty
         }
     }
     
     @objc func handleSingleTextChanged() {
         if let text = textFields?[0].text, let action = actions.last {
             action.isEnabled = !text.isEmpty
+        }
+    }
+    
+    @objc func handleDoubleTextChanged() {
+        if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let action = actions.last {
+            action.isEnabled = !text1.isEmpty && !text2.isEmpty
         }
     }
     

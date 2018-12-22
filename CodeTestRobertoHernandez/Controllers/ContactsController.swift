@@ -15,7 +15,7 @@ class ContactsController: UITableViewController {
     fileprivate let realm = try! Realm()
     fileprivate var contacts : Results<Contact>?
     fileprivate var searchResults : Results<Contact>?
-    fileprivate let contrast = ContrastColorOf(#colorLiteral(red: 0, green: 0, blue: 0.2901960784, alpha: 1), returnFlat: true)
+    fileprivate let contrast = ContrastColorOf(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1), returnFlat: true)
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
@@ -23,6 +23,10 @@ class ContactsController: UITableViewController {
         setNavAttributes()
         setUpTableViewAndSearch()
         loadContacts()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,10 +75,11 @@ class ContactsController: UITableViewController {
     fileprivate func setNavAttributes() {
         let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : contrast]
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.searchController = searchController
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1)
         navigationController?.navigationBar.tintColor = contrast
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
     }
@@ -83,22 +88,18 @@ class ContactsController: UITableViewController {
         //Search Attributes
         searchController.delegate = self
         searchController.searchBar.delegate = self
-        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
-        searchController.searchBar.barTintColor = contrast
-        searchController.searchBar.tintColor = #colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1)
+        searchController.searchBar.tintColor = contrast
         searchController.searchBar.searchBarStyle = .minimal
-        
         //Table View Attributes
-        tableView.tableHeaderView = searchController.searchBar
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.keyboardDismissMode = .interactive
-        tableView.backgroundColor = #colorLiteral(red: 0.2980392157, green: 0.2980392157, blue: 0.5019607843, alpha: 1)
+        tableView.backgroundColor = contrast
     }
     
     fileprivate func showContactInfo(_ indexPath: IndexPath) {

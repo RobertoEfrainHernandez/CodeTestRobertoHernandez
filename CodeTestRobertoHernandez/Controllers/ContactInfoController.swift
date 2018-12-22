@@ -37,7 +37,7 @@ class ContactInfoController: UITableViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        updateNavBar(#colorLiteral(red: 0.0009986713994, green: 2.370890797e-05, blue: 0.2919406891, alpha: 1))
+        updateNavBar(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1))
     }
     
     fileprivate func setTableView() {
@@ -188,15 +188,15 @@ extension ContactInfoController {
         cell.infoLabel.textColor = ContrastColorOf(color, returnFlat: true)
         switch indexPath.section {
         case 0:
-            cell.infoLabel.text = contact?.name == "" ? "There is no Name" : contact?.name
+            cell.infoLabel.text = (contact?.name == "" || contact?.name == nil) ? "There is no Name" : contact?.name
         case 1:
-            cell.infoLabel.text = contact?.birthday == "" ? "Birthday needs to be added" : contact?.birthday
+            cell.infoLabel.text = (contact?.birthday == "" || contact?.birthday == nil) ? "Birthday needs to be added" : contact?.birthday
         case 2:
-            cell.infoLabel.text = (phones?.isEmpty)! ? "There are no Phone Numbers" : phones?[indexPath.row].phoneNumber
+            cell.infoLabel.text = ((phones?.isEmpty)! || phones == nil) ? "There are no Phone Numbers" : phones?[indexPath.row].phoneNumber
         case 3:
-            cell.infoLabel.text = (emails?.isEmpty)! ? "There are no Emails" : emails?[indexPath.row].email
+            cell.infoLabel.text = ((emails?.isEmpty)! || emails == nil) ? "There are no Emails" : emails?[indexPath.row].email
         default:
-            cell.infoLabel.text = (addresses?.isEmpty)! ? "There are no Addresses" : addresses?[indexPath.row].address
+            cell.infoLabel.text = ((addresses?.isEmpty)! || addresses == nil) ? "There are no Addresses" : addresses?[indexPath.row].address
         }
         return cell
     }
@@ -205,8 +205,153 @@ extension ContactInfoController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            self.deleteEntity(indexPath)
+        }
         
+        let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
+            self.editEntity(indexPath)
+        }
+        let color = UIColor(hexString: contact?.color ?? "008B8B")!
+        edit.backgroundColor = color
+        if (indexPath.section == 0 || indexPath.section == 1) {
+            return [edit]
+        }
+        return [delete, edit]
     }
     
+}
+
+extension ContactInfoController {
+    fileprivate func deleteEntity(_ indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
+            if let phones = phones {
+              delete(phone: phones[indexPath.row])
+            }
+        case 3:
+            if let emails = emails {
+                delete(email: emails[indexPath.row])
+            }
+        default:
+            if let addresses = addresses {
+                delete(address: addresses[indexPath.row])
+            }
+        }
+    }
+    
+    fileprivate func editEntity(_ indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            handleName()
+        case 1:
+            handleBirthday()
+        case 2:
+            edit(phoneIndex: indexPath)
+        case 3:
+            edit(emailIndex: indexPath)
+        default:
+            edit(addressIndex: indexPath)
+        }
+    }
+    
+    //MARK:- Deleting at a particular Row
+    fileprivate func delete(phone: Phone) {
+        do {
+            try realm.write {
+                realm.delete(phone)
+            }
+        } catch {
+            print("Error deleting Phone Numder:", error)
+        }
+        tableView.reloadData()
+    }
+    
+    fileprivate func delete(email: Email) {
+        do {
+            try realm.write {
+                realm.delete(email)
+            }
+        } catch {
+            print("Error deleting Email Address:", error)
+        }
+        tableView.reloadData()
+    }
+    
+    fileprivate func delete(address: Address) {
+        do {
+            try realm.write {
+                realm.delete(address)
+            }
+        } catch {
+            print("Error deleting Address:", error)
+        }
+        tableView.reloadData()
+    }
+    
+    //MARK:- Editing at a particular row
+    fileprivate func edit(phoneIndex: IndexPath) {
+        let presenter = AddPhonePresenter { [unowned self] (phone) in
+            if let currentContact = self.contact {
+                do {
+                    try self.realm.write {
+                        currentContact.phoneNums[phoneIndex.row] = phone
+                    }
+                } catch {
+                    print("Error saving new Email Address:", error)
+                }
+            }
+            self.tableView.reloadData()
+        }
+        presenter.present(in: self)
+    }
+    
+    fileprivate func edit(emailIndex: IndexPath) {
+        let presenter = AddEmailPresenter { [unowned self] (email) in
+            if let currentContact = self.contact {
+                do {
+                    try self.realm.write {
+                        currentContact.emails[emailIndex.row] = email
+                    }
+                } catch {
+                    print("Error saving new Email Address:", error)
+                }
+            }
+            self.tableView.reloadData()
+        }
+        presenter.present(in: self)
+    }
+    
+    fileprivate func edit(addressIndex: IndexPath) {
+        let presenter = AddAddressPresenter { [unowned self] (address) in
+            if let currentContact = self.contact {
+                do {
+                    try self.realm.write {
+                        currentContact.addresses[addressIndex.row] = address
+                    }
+                } catch {
+                    print("Error saving new Address:", error)
+                }
+            }
+            self.tableView.reloadData()
+        }
+        presenter.present(in: self)
+    }
+    
+    fileprivate func handleName() {
+        let presenter = EditNamePresenter { [unowned self] (name) in
+            if let currentContact = self.contact {
+                do {
+                    try self.realm.write {
+                        currentContact.name = name
+                    }
+                } catch {
+                    print("Error saving Name:", error)
+                }
+            }
+            self.tableView.reloadData()
+        }
+        presenter.present(in: self)
+    }
 }

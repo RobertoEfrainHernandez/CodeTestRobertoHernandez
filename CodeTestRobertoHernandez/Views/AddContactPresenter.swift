@@ -23,23 +23,23 @@ struct AddContactPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter First Name"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             firstNameField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Last Name"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             lastNameField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Phone Number"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             phoneField = field
             phoneField.keyboardType = .phonePad
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Email"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             emailField = field
             emailField.keyboardType = .emailAddress
         }
@@ -147,22 +147,22 @@ struct AddAddressPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter Street"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             streetField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter City"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             cityField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter State"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             stateField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Zipcode"
-            field.addTarget(alert, action: #selector(alert.handleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             zipField = field
         }
         
@@ -209,3 +209,42 @@ struct AddBirthdayPresenter {
         viewController.present(alert, animated: true)
     }
 }
+
+//MARK:- Edit Name Presenter
+
+struct EditNamePresenter {
+    let title = "Edit Contact's Name"
+    let actionTitle = "Okay"
+    let handler: (String) -> ()
+    
+    func present(in viewController: UIViewController) {
+        var firstField = UITextField()
+        var lastField = UITextField()
+        
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
+            self.handler("\(firstField.text!) \(lastField.text!)")
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addTextField { (field) in
+            field.placeholder = "Enter First Name"
+            field.addTarget(self, action: #selector(alert.handleDoubleTextChanged), for: .editingChanged)
+            firstField = field
+        }
+        
+        alert.addTextField { (field) in
+            field.placeholder = "Enter Last Name"
+            field.addTarget(self, action: #selector(alert.handleDoubleTextChanged), for: .editingChanged)
+            lastField = field
+        }
+        
+        addAction.isEnabled = false
+        alert.addAction(cancelAction)
+        alert.addAction(addAction)
+        viewController.present(alert, animated: true)
+    }
+}
+
+
