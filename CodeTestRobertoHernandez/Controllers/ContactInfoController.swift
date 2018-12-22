@@ -12,6 +12,8 @@ import ChameleonFramework
 
 class ContactInfoController: UITableViewController {
     
+    //MARK:- Properties
+    
     fileprivate let realm = try! Realm()
     fileprivate var phones: Results<Phone>?
     fileprivate var emails: Results<Email>?
@@ -22,6 +24,8 @@ class ContactInfoController: UITableViewController {
            loadPhoneEmailAddress()
         }
     }
+    
+    //MARK:- Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +43,8 @@ class ContactInfoController: UITableViewController {
         super.viewDidDisappear(animated)
         updateNavBar(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1))
     }
+    
+    //MARK:- Fileprivate Methods
     
     fileprivate func setTableView() {
         tableView.tableFooterView = UIView()
@@ -128,6 +134,8 @@ class ContactInfoController: UITableViewController {
         presenter.present(in: self)
     }
 }
+
+//MARK:- Extension for TableView Methods
 
 extension ContactInfoController {
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -220,8 +228,9 @@ extension ContactInfoController {
         }
         return [delete, edit]
     }
-    
 }
+
+//MARK:- Extension for Deleting and Editing Methods for TableViewRowAction
 
 extension ContactInfoController {
     fileprivate func deleteEntity(_ indexPath: IndexPath) {

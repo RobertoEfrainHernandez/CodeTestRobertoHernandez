@@ -118,7 +118,7 @@ extension ContactsController {
         let label = UILabel()
         label.text = "There are currently no Contacts. How about we add some?"
         label.textAlignment = .center
-        label.textColor = ContrastColorOf(#colorLiteral(red: 0.06021262705, green: 0.2616186738, blue: 0.5734841228, alpha: 1), returnFlat: true)
+        label.textColor = #colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1)
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         return label
