@@ -40,7 +40,7 @@ class ContactInfoController: UITableViewController {
         updateNavBar(color)
     }
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         updateNavBar(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1))
     }
     

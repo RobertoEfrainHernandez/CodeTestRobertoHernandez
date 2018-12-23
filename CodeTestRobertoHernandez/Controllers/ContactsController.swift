@@ -25,8 +25,9 @@ class ContactsController: UITableViewController {
         loadContacts()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        resetSearchBar(searchController.searchBar)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -147,10 +148,19 @@ extension ContactsController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if let contacts = contacts {
-           delete(contact: contacts[indexPath.row])
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if let contacts = contacts {
+//           delete(contact: contacts[indexPath.row])
+//        }
+//    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (_, indexPath) in
+            if let contacts = self.contacts {
+                self.delete(contact: contacts[indexPath.row])
+            }
         }
+        return [delete]
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -196,6 +206,10 @@ extension ContactsController: UISearchBarDelegate, UISearchControllerDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        resetSearchBar(searchBar)
+    }
+    
+    fileprivate func resetSearchBar(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.showsCancelButton = false
         searchBar.endEditing(true)
