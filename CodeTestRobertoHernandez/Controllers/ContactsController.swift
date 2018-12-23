@@ -107,6 +107,7 @@ class ContactsController: UITableViewController {
         let contact = searchResults?[indexPath.row]
         let contactInfo = ContactInfoController()
         contactInfo.contact = contact
+        contactInfo.contactInfoDelegate = self
         navigationController?.pushViewController(contactInfo, animated: true)
     }
 
@@ -147,12 +148,6 @@ extension ContactsController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if let contacts = contacts {
-//           delete(contact: contacts[indexPath.row])
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (_, indexPath) in
@@ -214,6 +209,12 @@ extension ContactsController: UISearchBarDelegate, UISearchControllerDelegate {
         searchBar.showsCancelButton = false
         searchBar.endEditing(true)
         searchResults = contacts
+        tableView.reloadData()
+    }
+}
+
+extension ContactsController: ContactInfoDelegate {
+    func didUpdateContactInfo() {
         tableView.reloadData()
     }
 }

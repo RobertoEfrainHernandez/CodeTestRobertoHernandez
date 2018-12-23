@@ -10,6 +10,10 @@ import UIKit
 import RealmSwift
 import ChameleonFramework
 
+protocol ContactInfoDelegate {
+    func didUpdateContactInfo()
+}
+
 class ContactInfoController: UITableViewController {
     
     //MARK:- Properties
@@ -19,6 +23,7 @@ class ContactInfoController: UITableViewController {
     fileprivate var emails: List<Email>?
     fileprivate var addresses: List<Address>?
     
+    var contactInfoDelegate: ContactInfoDelegate?
     var contact: Contact? {
         didSet {
            loadPhoneEmailAddress()
@@ -82,7 +87,8 @@ class ContactInfoController: UITableViewController {
         }
         let color = UIColor(hexString: contact?.color ?? "008B8B")!
         updateNavBar(color)
-        self.tableView.reloadData()
+        tableView.reloadData()
+        contactInfoDelegate?.didUpdateContactInfo()
     }
     
     @objc fileprivate func handlePhones() {
@@ -231,10 +237,12 @@ extension ContactInfoController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             self.deleteEntity(indexPath)
+            self.contactInfoDelegate?.didUpdateContactInfo()
         }
         
         let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
             self.editEntity(indexPath)
+            self.contactInfoDelegate?.didUpdateContactInfo()
         }
         let color = UIColor(hexString: contact?.color ?? "008B8B")!
         edit.backgroundColor = color
