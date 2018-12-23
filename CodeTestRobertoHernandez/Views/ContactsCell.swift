@@ -54,7 +54,7 @@ class ContactsCell: UITableViewCell {
         didSet {
             let name = contact?.name ?? "John Doe"
             let phone = contact?.phoneNums.first?.phoneNumber ?? "No phone number"
-            let email = contact?.emails.first?.email ?? "No emails"
+            let email = contact?.emails.first?.email ?? "No email"
             let color = UIColor(hexString: contact?.color ?? "008B8B")!
             let contrast = ContrastColorOf(color, returnFlat: true)
             insertGradient(color, contrast)

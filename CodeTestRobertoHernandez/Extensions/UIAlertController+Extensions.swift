@@ -11,13 +11,25 @@ import UIKit
 extension UIAlertController {
     @objc func handleMultipleTextChanged() {
         if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let text3 = textFields?[2].text, let text4 = textFields?[3].text, let action = actions.last {
-            action.isEnabled = !text1.isEmpty && !text2.isEmpty && !text3.isEmpty && !text4.isEmpty
+            action.isEnabled = !text1.isEmpty && !text2.isEmpty && isValidPhone(text3) && isValidEmail(text4)
         }
     }
     
     @objc func handleSingleTextChanged() {
         if let text = textFields?[0].text, let action = actions.last {
             action.isEnabled = !text.isEmpty
+        }
+    }
+    
+    @objc func handleSingleTextChangedForPhone() {
+        if let text = textFields?[0].text, let action = actions.last {
+            action.isEnabled = isValidPhone(text)
+        }
+    }
+    
+    @objc func handleSingleTextChangedForEmail() {
+        if let text = textFields?[0].text, let action = actions.last {
+            action.isEnabled = isValidEmail(text)
         }
     }
     
@@ -35,7 +47,7 @@ extension UIAlertController {
     }
     
     fileprivate func isValidPhone(_ phone: String) -> Bool {
-        let phoneRegex = "^((0091)|(\\+91)|0?)[6789]{1}\\d{9}$";
+        let phoneRegex = "^\\d{3}-\\d{3}-\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
         let result = phoneTest.evaluate(with: phone)
         return !phone.isEmpty && result

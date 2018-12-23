@@ -15,9 +15,9 @@ class ContactInfoController: UITableViewController {
     //MARK:- Properties
     
     fileprivate let realm = try! Realm()
-    fileprivate var phones: Results<Phone>?
-    fileprivate var emails: Results<Email>?
-    fileprivate var addresses: Results<Address>?
+    fileprivate var phones: List<Phone>?
+    fileprivate var emails: List<Email>?
+    fileprivate var addresses: List<Address>?
     
     var contact: Contact? {
         didSet {
@@ -62,9 +62,9 @@ class ContactInfoController: UITableViewController {
     }
     
     fileprivate func loadPhoneEmailAddress() {
-        phones = contact?.phoneNums.sorted(byKeyPath: "phoneNumber", ascending: true)
-        emails = contact?.emails.sorted(byKeyPath: "email", ascending: true)
-        addresses = contact?.addresses.sorted(byKeyPath: "address", ascending: true)
+        phones = contact?.phoneNums
+        emails = contact?.emails
+        addresses = contact?.addresses
         tableView.reloadData()
     }
     
