@@ -33,6 +33,12 @@ extension UIAlertController {
         }
     }
     
+    @objc func handleSingleTextChangedForBirthday() {
+        if let text = textFields?[0].text, let action = actions.last {
+            action.isEnabled = isValidDate(text)
+        }
+    }
+    
     @objc func handleDoubleTextChanged() {
         if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let action = actions.last {
             action.isEnabled = !text1.isEmpty && !text2.isEmpty
@@ -51,5 +57,16 @@ extension UIAlertController {
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
         let result = phoneTest.evaluate(with: phone)
         return !phone.isEmpty && result
+    }
+    
+    fileprivate func isValidDate(_ birthday: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM d, yyyy"
+        
+        if dateFormatter.date(from: birthday) != nil {
+            return true
+        } else {
+            return false
+        }
     }
 }

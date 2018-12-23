@@ -196,8 +196,8 @@ struct AddBirthdayPresenter {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
-            field.placeholder = "Enter Email Address"
-            field.addTarget(self, action: #selector(alert.handleSingleTextChanged), for: .editingChanged)
+            field.placeholder = "Enter Birthday i.e.(August 25, 1990)"
+            field.addTarget(self, action: #selector(alert.handleSingleTextChangedForBirthday), for: .editingChanged)
             birthdayField = field
         }
         
