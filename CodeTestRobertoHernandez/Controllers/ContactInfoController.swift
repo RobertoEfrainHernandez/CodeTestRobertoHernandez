@@ -30,6 +30,7 @@ class ContactInfoController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Change Color", style: .plain, target: self, action: #selector(handleColorChanged))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +52,7 @@ class ContactInfoController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelectionDuringEditing = true
     }
+    
     fileprivate func updateNavBar(_ color: UIColor) {
         let contrast = ContrastColorOf(color, returnFlat: true)
         guard let navBar = navigationController?.navigationBar else { fatalError("Navigation Controller does not exist")}
@@ -68,7 +70,20 @@ class ContactInfoController: UITableViewController {
         tableView.reloadData()
     }
     
-    
+    @objc fileprivate func handleColorChanged() {
+        if let currentContact = self.contact {
+            do {
+                try self.realm.write {
+                    currentContact.color = UIColor.randomFlat.hexValue()
+                }
+            } catch {
+                print("Error saving new Color:", error)
+            }
+        }
+        let color = UIColor(hexString: contact?.color ?? "008B8B")!
+        updateNavBar(color)
+        self.tableView.reloadData()
+    }
     
     @objc fileprivate func handlePhones() {
         let presenter = AddPhonePresenter { [unowned self] (phone) in
