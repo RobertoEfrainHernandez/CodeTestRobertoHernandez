@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIAlertController {
-    @objc func handleMultipleTextChanged() {
+    @objc func handleMultipleTextChangedForAddingContact() {
         if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let text3 = textFields?[2].text, let text4 = textFields?[3].text, let action = actions.last {
             action.isEnabled = !text1.isEmpty && !text2.isEmpty && isValidPhone(text3) && isValidEmail(text4)
         }
@@ -36,6 +36,12 @@ extension UIAlertController {
     @objc func handleSingleTextChangedForBirthday() {
         if let text = textFields?[0].text, let action = actions.last {
             action.isEnabled = isValidDate(text)
+        }
+    }
+    
+    @objc func handleMultipleTextChangedForAddress() {
+        if let text1 = textFields?[0].text, let text2 = textFields?[1].text, let text3 = textFields?[2].text, let text4 = textFields?[3].text, let action = actions.last {
+            action.isEnabled = !text1.isEmpty && !text2.isEmpty && !text3.isEmpty && !text4.isEmpty
         }
     }
     

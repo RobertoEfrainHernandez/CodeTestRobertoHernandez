@@ -23,22 +23,22 @@ struct AddContactPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter First Name"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
             firstNameField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Last Name"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
             lastNameField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Phone i.e.(888-888-888)"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
             phoneField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Email"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
             emailField = field
             emailField.keyboardType = .emailAddress
         }
@@ -145,22 +145,22 @@ struct AddAddressPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter Street"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
             streetField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter City"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
             cityField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter State"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
             stateField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Zipcode"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
             zipField = field
         }
         
