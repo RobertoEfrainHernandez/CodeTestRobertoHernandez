@@ -49,6 +49,6 @@ class HeaderView: UIView {
         stack.axis = .horizontal
         stack.spacing = stackPadding
         addSubview(stack)
-        stack.fillSuperview(padding: .init(top: stackPadding, left: stackPadding, bottom: stackPadding, right: stackPadding * 3))
+        stack.fillSuperview(padding: .init(top: stackPadding, left: stackPadding, bottom: stackPadding, right: stackPadding * 4))
     }
 }

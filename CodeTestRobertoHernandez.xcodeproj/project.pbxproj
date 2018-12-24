@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5512673D2D08ECF0A9CCA7F9 /* Pods_CodeTestRobertoHernandez.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84FB1A98AB0698F1A71CDDE /* Pods_CodeTestRobertoHernandez.framework */; };
+		5702861D21D16E92007BD714 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5702861C21D16E92007BD714 /* UIColor+Extensions.swift */; };
+		5702861F21D1767F007BD714 /* Realm+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5702861E21D1767F007BD714 /* Realm+Extensions.swift */; };
 		570D4FFE21CC63A4002E12A1 /* ContactInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570D4FFD21CC63A4002E12A1 /* ContactInfoController.swift */; };
 		57400D9D21CCCF0A004D77F6 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57400D9C21CCCF0A004D77F6 /* Address.swift */; };
 		57400D9F21CCD534004D77F6 /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57400D9E21CCD534004D77F6 /* HeaderLabel.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5702861C21D16E92007BD714 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		5702861E21D1767F007BD714 /* Realm+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+Extensions.swift"; sourceTree = "<group>"; };
 		570D4FFD21CC63A4002E12A1 /* ContactInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoController.swift; sourceTree = "<group>"; };
 		57400D9C21CCCF0A004D77F6 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		57400D9E21CCD534004D77F6 /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				57E1609A21C984F000DB9E8F /* UIView+Extensions.swift */,
+				5702861C21D16E92007BD714 /* UIColor+Extensions.swift */,
+				5702861E21D1767F007BD714 /* Realm+Extensions.swift */,
 				57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */,
 				57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */,
 			);
@@ -279,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */,
+				5702861F21D1767F007BD714 /* Realm+Extensions.swift in Sources */,
 				57E1609B21C984F000DB9E8F /* UIView+Extensions.swift in Sources */,
 				57E5F0AC21CB547C00CAB8D0 /* Email.swift in Sources */,
 				57E1608B21C9829800DB9E8F /* ContactsController.swift in Sources */,
@@ -293,6 +300,7 @@
 				576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */,
 				576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */,
 				57E5F0A621CB18AE00CAB8D0 /* AddContactPresenter.swift in Sources */,
+				5702861D21D16E92007BD714 /* UIColor+Extensions.swift in Sources */,
 				57E5F0AA21CB53FE00CAB8D0 /* Phone.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

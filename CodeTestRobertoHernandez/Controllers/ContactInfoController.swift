@@ -17,7 +17,6 @@ protocol ContactInfoDelegate {
 class ContactInfoController: UITableViewController {
     
     //MARK:- Properties
-    
     fileprivate let realm = try! Realm()
     fileprivate var phones: List<Phone>?
     fileprivate var emails: List<Email>?
@@ -31,11 +30,10 @@ class ContactInfoController: UITableViewController {
     }
     
     //MARK:- Lifecycle Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Change Color", style: .plain, target: self, action: #selector(handleColorChanged))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Color", style: .plain, target: self, action: #selector(handleColorChanged))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,11 +45,10 @@ class ContactInfoController: UITableViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        updateNavBar(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1))
+        updateNavBar(.mainColor)
     }
     
-    //MARK:- Fileprivate Methods
-    
+    //MARK:- Fileprivate and Selector Methods
     fileprivate func setTableView() {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
@@ -164,7 +161,7 @@ extension ContactInfoController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -215,6 +212,7 @@ extension ContactInfoController {
         let color = UIColor(hexString: contact?.color ?? "008B8B")!
         cell.container.backgroundColor = color
         cell.infoLabel.textColor = ContrastColorOf(color, returnFlat: true)
+        
         switch indexPath.section {
         case 0:
             cell.infoLabel.text = (contact?.name == "" || contact?.name == nil) ? "There is no Name" : contact?.name
@@ -249,141 +247,40 @@ extension ContactInfoController {
         if (indexPath.section == 0 || indexPath.section == 1) {
             return [edit]
         }
+        
         return [delete, edit]
     }
 }
 
 //MARK:- Extension for Deleting and Editing Methods for TableViewRowAction
-
 extension ContactInfoController {
     fileprivate func deleteEntity(_ indexPath: IndexPath) {
-        switch indexPath.section {
-        case 2:
-            if let phones = phones {
-              delete(phone: phones[indexPath.row])
-            }
-        case 3:
-            if let emails = emails {
-                delete(email: emails[indexPath.row])
-            }
-        default:
-            if let addresses = addresses {
-                delete(address: addresses[indexPath.row])
+        if let phones = phones, let emails = emails, let addresses = addresses {
+            switch indexPath.section {
+            case 2:
+                Realm.delete(phone: phones[indexPath.row], tableView)
+            case 3:
+                Realm.delete(email: emails[indexPath.row], tableView)
+            default:
+                Realm.delete(address: addresses[indexPath.row], tableView)
             }
         }
     }
     
     fileprivate func editEntity(_ indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            handleName()
-        case 1:
-            handleBirthday()
-        case 2:
-            edit(phoneIndex: indexPath)
-        case 3:
-            edit(emailIndex: indexPath)
-        default:
-            edit(addressIndex: indexPath)
-        }
-    }
-    
-    //MARK:- Deleting at a particular Row
-    fileprivate func delete(phone: Phone) {
-        do {
-            try realm.write {
-                realm.delete(phone)
+        if let currentContact = contact {
+            switch indexPath.section {
+            case 0:
+                Realm.handleName(currentContact, tableView, self)
+            case 1:
+                handleBirthday()
+            case 2:
+                Realm.edit(phoneIndex: indexPath, currentContact, tableView, self)
+            case 3:
+                Realm.edit(emailIndex: indexPath, currentContact, tableView, self)
+            default:
+                Realm.edit(addressIndex: indexPath, currentContact, tableView, self)
             }
-        } catch {
-            print("Error deleting Phone Numder:", error)
         }
-        tableView.reloadData()
-    }
-    
-    fileprivate func delete(email: Email) {
-        do {
-            try realm.write {
-                realm.delete(email)
-            }
-        } catch {
-            print("Error deleting Email Address:", error)
-        }
-        tableView.reloadData()
-    }
-    
-    fileprivate func delete(address: Address) {
-        do {
-            try realm.write {
-                realm.delete(address)
-            }
-        } catch {
-            print("Error deleting Address:", error)
-        }
-        tableView.reloadData()
-    }
-    
-    //MARK:- Editing at a particular row
-    fileprivate func edit(phoneIndex: IndexPath) {
-        let presenter = AddPhonePresenter { [unowned self] (phone) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.phoneNums[phoneIndex.row] = phone
-                    }
-                } catch {
-                    print("Error saving new Email Address:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
-    }
-    
-    fileprivate func edit(emailIndex: IndexPath) {
-        let presenter = AddEmailPresenter { [unowned self] (email) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.emails[emailIndex.row] = email
-                    }
-                } catch {
-                    print("Error saving new Email Address:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
-    }
-    
-    fileprivate func edit(addressIndex: IndexPath) {
-        let presenter = AddAddressPresenter { [unowned self] (address) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.addresses[addressIndex.row] = address
-                    }
-                } catch {
-                    print("Error saving new Address:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
-    }
-    
-    fileprivate func handleName() {
-        let presenter = EditNamePresenter { [unowned self] (name) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.name = name
-                    }
-                } catch {
-                    print("Error saving Name:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
     }
 }

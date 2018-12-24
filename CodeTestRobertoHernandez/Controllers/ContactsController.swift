@@ -8,14 +8,12 @@
 
 import UIKit
 import RealmSwift
-import ChameleonFramework
 
 class ContactsController: UITableViewController {
     
     fileprivate let realm = try! Realm()
     fileprivate var contacts : Results<Contact>?
     fileprivate var searchResults : Results<Contact>?
-    fileprivate let contrast = ContrastColorOf(#colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1), returnFlat: true)
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
@@ -39,7 +37,7 @@ class ContactsController: UITableViewController {
     /* Realm Calls */
     @objc fileprivate func handleAdd() {
         let presenter = AddContactPresenter { [unowned self] (contact) in
-            self.save(contact: contact)
+            Realm.save(contact, self.tableView)
         }
         presenter.present(in: self)
     }
@@ -50,38 +48,16 @@ class ContactsController: UITableViewController {
         tableView.reloadData()
     }
     
-    fileprivate func save(contact: Contact) {
-        do {
-            try realm.write {
-                realm.add(contact)
-            }
-        } catch {
-            print("Error saving contact:", error)
-        }
-        tableView.reloadData()
-    }
-    
-    fileprivate func delete(contact: Contact) {
-        do {
-            try realm.write {
-                realm.delete(contact)
-            }
-        } catch {
-            print("Error deleting contact:", error)
-        }
-        tableView.reloadData()
-    }
-    
     /* Set Up UI for NavBar and Search */
     fileprivate func setNavAttributes() {
-        let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : contrast]
+        let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : UIColor.mainContrastColor]
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
         navigationController?.navigationBar.titleTextAttributes = attributes
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1)
-        navigationController?.navigationBar.tintColor = contrast
+        navigationController?.navigationBar.barTintColor = .mainColor
+        navigationController?.navigationBar.tintColor = .mainContrastColor
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
     }
     
@@ -92,7 +68,7 @@ class ContactsController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Contact"
-        searchController.searchBar.tintColor = contrast
+        searchController.searchBar.tintColor = .mainContrastColor
         searchController.searchBar.searchBarStyle = .minimal
         //Table View Attributes
         tableView.delegate = self
@@ -100,7 +76,7 @@ class ContactsController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.keyboardDismissMode = .interactive
-        tableView.backgroundColor = contrast
+        tableView.backgroundColor = .mainContrastColor
     }
     
     fileprivate func showContactInfo(_ indexPath: IndexPath) {
@@ -120,7 +96,7 @@ extension ContactsController {
         let label = UILabel()
         label.text = "There are currently no Contacts. How about we add some?"
         label.textAlignment = .center
-        label.textColor = #colorLiteral(red: 0.7803921569, green: 0, blue: 0.2235294118, alpha: 1)
+        label.textColor = .mainColor
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         return label
@@ -152,7 +128,7 @@ extension ContactsController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (_, indexPath) in
             if let contacts = self.contacts {
-                self.delete(contact: contacts[indexPath.row])
+                Realm.delete(contacts[indexPath.row], self.tableView)
             }
         }
         return [delete]
