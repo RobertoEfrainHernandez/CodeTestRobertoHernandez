@@ -16,11 +16,19 @@ class ContactsController: UITableViewController {
     fileprivate var searchResults : Results<Contact>?
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 
+    //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavAttributes()
         setUpTableViewAndSearch()
         loadContacts()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let searchField = searchController.searchBar.value(forKeyPath: "searchField") as? UITextField
+        searchField?.textColor = .mainContrastColor
+        searchField?.attributedPlaceholder = NSAttributedString(string: "Search For Contact", attributes: [.foregroundColor : UIColor.mainContrastColor])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -33,8 +41,6 @@ class ContactsController: UITableViewController {
     }
 
     //MARK:- Fileprivate Methods
-    
-    /* Realm Calls */
     @objc fileprivate func handleAdd() {
         let presenter = AddContactPresenter { [unowned self] (contact) in
             Realm.save(contact, self.tableView)
@@ -67,7 +73,6 @@ class ContactsController: UITableViewController {
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Contact"
         searchController.searchBar.tintColor = .mainContrastColor
         searchController.searchBar.searchBarStyle = .minimal
         //Table View Attributes
@@ -90,7 +95,6 @@ class ContactsController: UITableViewController {
 }
 
 //MARK:- Table View Methods
-
 extension ContactsController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
@@ -155,7 +159,6 @@ extension ContactsController {
 }
 
 //MARK:- Search Bar Methods
-
 extension ContactsController: UISearchBarDelegate, UISearchControllerDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -189,6 +192,7 @@ extension ContactsController: UISearchBarDelegate, UISearchControllerDelegate {
     }
 }
 
+//MARK:- Contact Info Delegate Method
 extension ContactsController: ContactInfoDelegate {
     func didUpdateContactInfo() {
         tableView.reloadData()

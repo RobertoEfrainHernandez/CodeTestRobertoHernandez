@@ -35,6 +35,74 @@ extension Realm {
         tableView.reloadData()
     }
     
+    //MARK:- Methods to use for Selector Methods in ContactInfoController
+    static func changeColor(_ contact: Contact, _ tableView: UITableView) {
+        do {
+            try realm.write {
+                contact.color = UIColor.randomFlat.hexValue()
+            }
+        } catch {
+            print("Error saving new Color:", error)
+        }
+        tableView.reloadData()
+    }
+    
+    static func addBirthday(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+        let presenter = AddBirthdayPresenter { (birthday) in
+            do {
+                try realm.write {
+                    contact.birthday = birthday
+                }
+            } catch {
+                print("Error saving Birthday:", error)
+            }
+            tableView.reloadData()
+        }
+        presenter.present(in: viewController)
+    }
+    
+    static func addPhones(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+        let presenter = AddPhonePresenter { (phone) in
+            do {
+                try realm.write {
+                    contact.phoneNums.append(phone)
+                }
+            } catch {
+                print("Error saving new Email Address:", error)
+            }
+            tableView.reloadData()
+        }
+        presenter.present(in: viewController)
+    }
+
+    static func addEmails(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+        let presenter = AddEmailPresenter { (email) in
+            do {
+                try realm.write {
+                    contact.emails.append(email)
+                }
+            } catch {
+                print("Error saving new Email Address:", error)
+            }
+            tableView.reloadData()
+        }
+        presenter.present(in: viewController)
+    }
+
+    static func addAddresses(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+        let presenter = AddAddressPresenter { (address) in
+            do {
+                try realm.write {
+                    contact.addresses.append(address)
+                }
+            } catch {
+                print("Error saving new Address:", error)
+            }
+            tableView.reloadData()
+        }
+        presenter.present(in: viewController)
+    }
+    
     //MARK:- Deleting Methods
     static func delete(phone: Phone, _ tableView: UITableView) {
         do {

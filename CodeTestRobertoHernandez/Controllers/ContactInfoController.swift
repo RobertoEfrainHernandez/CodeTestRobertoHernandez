@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import ChameleonFramework
 
+//Protocol for Updating ContactsController
 protocol ContactInfoDelegate {
     func didUpdateContactInfo()
 }
@@ -74,82 +75,35 @@ class ContactInfoController: UITableViewController {
     
     @objc fileprivate func handleColorChanged() {
         if let currentContact = self.contact {
-            do {
-                try self.realm.write {
-                    currentContact.color = UIColor.randomFlat.hexValue()
-                }
-            } catch {
-                print("Error saving new Color:", error)
-            }
+            Realm.changeColor(currentContact, tableView)
+            let color = UIColor(hexString: currentContact.color)!
+            updateNavBar(color)
+            contactInfoDelegate?.didUpdateContactInfo()
         }
-        let color = UIColor(hexString: contact?.color ?? "008B8B")!
-        updateNavBar(color)
-        tableView.reloadData()
-        contactInfoDelegate?.didUpdateContactInfo()
-    }
-    
-    @objc fileprivate func handlePhones() {
-        let presenter = AddPhonePresenter { [unowned self] (phone) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.phoneNums.append(phone)
-                    }
-                } catch {
-                    print("Error saving new Email Address:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
-    }
-    
-    @objc fileprivate func handleEmails() {
-        let presenter = AddEmailPresenter { [unowned self] (email) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.emails.append(email)
-                    }
-                } catch {
-                    print("Error saving new Email Address:", error)
-                }
-            }
-            self.tableView.reloadData()
-        }
-        presenter.present(in: self)
     }
     
     @objc fileprivate func handleBirthday() {
-        let presenter = AddBirthdayPresenter { [unowned self] (birthday) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.birthday = birthday
-                    }
-                } catch {
-                    print("Error saving Birthday:", error)
-                }
-            }
-            self.tableView.reloadData()
+        if let currentContact = contact {
+            Realm.addBirthday(currentContact, tableView, self)
         }
-        presenter.present(in: self)
+    }
+    
+    @objc fileprivate func handlePhones() {
+        if let currentContact = contact {
+          Realm.addPhones(currentContact, tableView, self)
+        }
+    }
+    
+    @objc fileprivate func handleEmails() {
+        if let currentContact = contact {
+            Realm.addEmails(currentContact, tableView, self)
+        }
     }
     
     @objc fileprivate func handleAddresses() {
-        let presenter = AddAddressPresenter { [unowned self] (address) in
-            if let currentContact = self.contact {
-                do {
-                    try self.realm.write {
-                        currentContact.addresses.append(address)
-                    }
-                } catch {
-                    print("Error saving new Address:", error)
-                }
-            }
-            self.tableView.reloadData()
+        if let currentContact = contact {
+           Realm.addAddresses(currentContact, tableView, self)
         }
-        presenter.present(in: self)
     }
 }
 
@@ -234,12 +188,12 @@ extension ContactInfoController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            self.deleteEntity(indexPath)
+            self.deleteContactProperty(indexPath)
             self.contactInfoDelegate?.didUpdateContactInfo()
         }
         
         let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
-            self.editEntity(indexPath)
+            self.editContactProperty(indexPath)
             self.contactInfoDelegate?.didUpdateContactInfo()
         }
         let color = UIColor(hexString: contact?.color ?? "008B8B")!
@@ -254,7 +208,7 @@ extension ContactInfoController {
 
 //MARK:- Extension for Deleting and Editing Methods for TableViewRowAction
 extension ContactInfoController {
-    fileprivate func deleteEntity(_ indexPath: IndexPath) {
+    fileprivate func deleteContactProperty(_ indexPath: IndexPath) {
         if let phones = phones, let emails = emails, let addresses = addresses {
             switch indexPath.section {
             case 2:
@@ -267,13 +221,13 @@ extension ContactInfoController {
         }
     }
     
-    fileprivate func editEntity(_ indexPath: IndexPath) {
+    fileprivate func editContactProperty(_ indexPath: IndexPath) {
         if let currentContact = contact {
             switch indexPath.section {
             case 0:
                 Realm.handleName(currentContact, tableView, self)
             case 1:
-                handleBirthday()
+                Realm.addBirthday(currentContact, tableView, self)
             case 2:
                 Realm.edit(phoneIndex: indexPath, currentContact, tableView, self)
             case 3:
