@@ -91,18 +91,12 @@ class ContactsController: UITableViewController {
         contactInfo.contactInfoDelegate = self
         navigationController?.pushViewController(contactInfo, animated: true)
     }
-
 }
 
 //MARK:- Table View Methods
 extension ContactsController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
-        label.text = "There are currently no Contacts. How about we add some?"
-        label.textAlignment = .center
-        label.textColor = .mainColor
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        let label = NoContactsLabel()
         return label
     }
     
