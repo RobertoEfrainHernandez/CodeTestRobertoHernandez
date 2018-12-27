@@ -13,12 +13,6 @@ import ChameleonFramework
 extension ContactInfoController {
     
     //MARK:- Selector Methods
-    @objc fileprivate func handleBirthday() {
-        if let currentContact = contact {
-            Realm.addBirthday(contact: currentContact, table: tableView, controller: self)
-        }
-    }
-    
     @objc fileprivate func handlePhones() {
         if let currentContact = contact {
             Realm.addPhones(contact: currentContact, table: tableView, controller: self)
@@ -62,12 +56,8 @@ extension ContactInfoController {
             view.addButton.isHidden = true
         case 1:
             view.headerLabel.text = "Birthday"
-            if contact?.birthday == "" {
-                view.addButton.addTarget(self, action: #selector(handleBirthday), for: .touchUpInside)
-            } else {
-                view.addButton.isEnabled = false
-                view.addButton.isHidden = true
-            }
+            view.addButton.isEnabled = false
+            view.addButton.isHidden = true
         case 2:
             view.headerLabel.text = "Phones"
             view.addButton.addTarget(self, action: #selector(handlePhones), for: .touchUpInside)
