@@ -19,9 +19,10 @@ class ContactInfoController: UITableViewController {
     
     //MARK:- Properties
     fileprivate let realm = try! Realm()
-    fileprivate var phones: List<Phone>?
-    fileprivate var emails: List<Email>?
-    fileprivate var addresses: List<Address>?
+    var phones: List<Phone>?
+    var emails: List<Email>?
+    var addresses: List<Address>?
+    fileprivate var contactColor: UIColor!
     
     var contactInfoDelegate: ContactInfoDelegate?
     var contact: Contact? {
@@ -40,9 +41,9 @@ class ContactInfoController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let name = contact?.name ?? "John Doe"
-        let color = UIColor(hexString: contact?.color ?? "008B8B")!
+        contactColor = UIColor(hexString: contact?.color ?? "C70039")!
         title = name
-        updateNavBar(color)
+        updateNavBar(contactColor)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -75,40 +76,15 @@ class ContactInfoController: UITableViewController {
     
     @objc fileprivate func handleColorChanged() {
         if let currentContact = self.contact {
-            Realm.changeColor(currentContact, tableView)
-            let color = UIColor(hexString: currentContact.color)!
-            updateNavBar(color)
+            Realm.changeColor(contact: currentContact, table: tableView)
+            contactColor = UIColor(hexString: currentContact.color)!
+            updateNavBar(contactColor)
             contactInfoDelegate?.didUpdateContactInfo()
-        }
-    }
-    
-    @objc fileprivate func handleBirthday() {
-        if let currentContact = contact {
-            Realm.addBirthday(currentContact, tableView, self)
-        }
-    }
-    
-    @objc fileprivate func handlePhones() {
-        if let currentContact = contact {
-          Realm.addPhones(currentContact, tableView, self)
-        }
-    }
-    
-    @objc fileprivate func handleEmails() {
-        if let currentContact = contact {
-            Realm.addEmails(currentContact, tableView, self)
-        }
-    }
-    
-    @objc fileprivate func handleAddresses() {
-        if let currentContact = contact {
-           Realm.addAddresses(currentContact, tableView, self)
         }
     }
 }
 
 //MARK:- Extension for TableView Methods
-
 extension ContactInfoController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -119,66 +95,16 @@ extension ContactInfoController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = HeaderView()
-        switch section {
-        case 0:
-            view.headerLabel.text = "Name"
-            view.addButton.isEnabled = false
-            view.addButton.isHidden = true
-        case 1:
-            view.headerLabel.text = "Birthday"
-            if contact?.birthday == "" {
-              view.addButton.addTarget(self, action: #selector(handleBirthday), for: .touchUpInside)
-            } else {
-                view.addButton.isEnabled = false
-                view.addButton.isHidden = true
-            }
-        case 2:
-            view.headerLabel.text = "Phones"
-            view.addButton.addTarget(self, action: #selector(handlePhones), for: .touchUpInside)
-        case 3:
-            view.headerLabel.text = "Emails"
-            view.addButton.addTarget(self, action: #selector(handleEmails), for: .touchUpInside)
-        default:
-            view.headerLabel.text = "Addresses"
-            view.addButton.addTarget(self, action: #selector(handleAddresses), for: .touchUpInside)
-        }
-        return view
+        return setHeaderView(for: section)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 1
-        case 2:
-            return phones?.count ?? 1
-        case 3:
-            return emails?.count ?? 1
-        default:
-            return addresses?.count ?? 1
-        }
+        return setNumberRows(for: section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ContactInfoCell(style: .default, reuseIdentifier: nil)
-        let color = UIColor(hexString: contact?.color ?? "008B8B")!
-        cell.container.backgroundColor = color
-        cell.infoLabel.textColor = ContrastColorOf(color, returnFlat: true)
-        
-        switch indexPath.section {
-        case 0:
-            cell.infoLabel.text = (contact?.name == "" || contact?.name == nil) ? "There is no Name" : contact?.name
-        case 1:
-            cell.infoLabel.text = (contact?.birthday == "" || contact?.birthday == nil) ? "Birthday needs to be added" : contact?.birthday
-        case 2:
-            cell.infoLabel.text = ((phones?.isEmpty)! || phones == nil) ? "There are no Phone Numbers" : phones?[indexPath.row].phoneNumber
-        case 3:
-            cell.infoLabel.text = ((emails?.isEmpty)! || emails == nil) ? "There are no Emails" : emails?[indexPath.row].email
-        default:
-            cell.infoLabel.text = ((addresses?.isEmpty)! || addresses == nil) ? "There are no Addresses" : addresses?[indexPath.row].address
-        }
+        setUpCell(for: cell, color: contactColor, indexPath: indexPath)
         return cell
     }
     
@@ -196,8 +122,9 @@ extension ContactInfoController {
             self.editContactProperty(indexPath)
             self.contactInfoDelegate?.didUpdateContactInfo()
         }
-        let color = UIColor(hexString: contact?.color ?? "008B8B")!
-        edit.backgroundColor = color
+        contactColor = UIColor(hexString: contact?.color ?? "008B8B")!
+        edit.backgroundColor = contactColor
+        
         if (indexPath.section == 0 || indexPath.section == 1) {
             return [edit]
         }
@@ -212,11 +139,11 @@ extension ContactInfoController {
         if let phones = phones, let emails = emails, let addresses = addresses {
             switch indexPath.section {
             case 2:
-                Realm.delete(phone: phones[indexPath.row], tableView)
+                Realm.delete(phone: phones[indexPath.row], table: tableView)
             case 3:
-                Realm.delete(email: emails[indexPath.row], tableView)
+                Realm.delete(email: emails[indexPath.row], table: tableView)
             default:
-                Realm.delete(address: addresses[indexPath.row], tableView)
+                Realm.delete(address: addresses[indexPath.row], table: tableView)
             }
         }
     }
@@ -225,15 +152,15 @@ extension ContactInfoController {
         if let currentContact = contact {
             switch indexPath.section {
             case 0:
-                Realm.handleName(currentContact, tableView, self)
+                Realm.handleName(contact: currentContact, table: tableView, controller: self)
             case 1:
-                Realm.addBirthday(currentContact, tableView, self)
+                Realm.addBirthday(contact: currentContact, table: tableView, controller: self)
             case 2:
-                Realm.edit(phoneIndex: indexPath, currentContact, tableView, self)
+                Realm.edit(phoneIndex: indexPath, contact: currentContact, table: tableView, controller: self)
             case 3:
-                Realm.edit(emailIndex: indexPath, currentContact, tableView, self)
+                Realm.edit(emailIndex: indexPath, contact: currentContact, table: tableView, controller: self)
             default:
-                Realm.edit(addressIndex: indexPath, currentContact, tableView, self)
+                Realm.edit(addressIndex: indexPath, contact: currentContact, table: tableView, controller: self)
             }
         }
     }

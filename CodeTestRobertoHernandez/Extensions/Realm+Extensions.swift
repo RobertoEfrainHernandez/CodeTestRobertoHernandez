@@ -13,7 +13,7 @@ fileprivate let realm = try! Realm()
 extension Realm {
     
     //MARK:- Saving and Deleting a Contact
-    static func save(_ contact: Contact, _ tableView: UITableView) {
+    static func save(contact: Contact, table: UITableView) {
         do {
             try realm.write {
                 realm.add(contact)
@@ -21,10 +21,10 @@ extension Realm {
         } catch {
             print("Error saving contact:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
-    static func delete(_ contact: Contact, _ tableView: UITableView) {
+    static func delete(contact: Contact, table: UITableView) {
         do {
             try realm.write {
                 realm.delete(contact)
@@ -32,11 +32,11 @@ extension Realm {
         } catch {
             print("Error deleting contact:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
     //MARK:- Methods to use for Selector Methods in ContactInfoController
-    static func changeColor(_ contact: Contact, _ tableView: UITableView) {
+    static func changeColor(contact: Contact, table: UITableView) {
         do {
             try realm.write {
                 contact.color = UIColor.randomFlat.hexValue()
@@ -44,10 +44,10 @@ extension Realm {
         } catch {
             print("Error saving new Color:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
-    static func addBirthday(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+    static func addBirthday(contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddBirthdayPresenter { (birthday) in
             do {
                 try realm.write {
@@ -56,12 +56,12 @@ extension Realm {
             } catch {
                 print("Error saving Birthday:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewController)
+        presenter.present(in: controller)
     }
     
-    static func addPhones(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+    static func addPhones(contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddPhonePresenter { (phone) in
             do {
                 try realm.write {
@@ -70,12 +70,12 @@ extension Realm {
             } catch {
                 print("Error saving new Email Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewController)
+        presenter.present(in: controller)
     }
 
-    static func addEmails(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+    static func addEmails(contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddEmailPresenter { (email) in
             do {
                 try realm.write {
@@ -84,12 +84,12 @@ extension Realm {
             } catch {
                 print("Error saving new Email Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewController)
+        presenter.present(in: controller)
     }
 
-    static func addAddresses(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+    static func addAddresses(contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddAddressPresenter { (address) in
             do {
                 try realm.write {
@@ -98,13 +98,13 @@ extension Realm {
             } catch {
                 print("Error saving new Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewController)
+        presenter.present(in: controller)
     }
     
     //MARK:- Deleting Methods
-    static func delete(phone: Phone, _ tableView: UITableView) {
+    static func delete(phone: Phone, table: UITableView) {
         do {
             try realm.write {
                 realm.delete(phone)
@@ -112,10 +112,10 @@ extension Realm {
         } catch {
             print("Error deleting Phone Numder:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
-    static func delete(email: Email, _ tableView: UITableView) {
+    static func delete(email: Email, table: UITableView) {
         do {
             try realm.write {
                 realm.delete(email)
@@ -123,10 +123,10 @@ extension Realm {
         } catch {
             print("Error deleting Email Address:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
-    static func delete(address: Address, _ tableView: UITableView) {
+    static func delete(address: Address, table: UITableView) {
         do {
             try realm.write {
                 realm.delete(address)
@@ -134,11 +134,11 @@ extension Realm {
         } catch {
             print("Error deleting Address:", error)
         }
-        tableView.reloadData()
+        table.reloadData()
     }
     
     //MARK:- Editing Methods
-    static func edit(phoneIndex: IndexPath, _ contact: Contact, _ tableView: UITableView, _ viewControler: UIViewController) {
+    static func edit(phoneIndex: IndexPath, contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddPhonePresenter { (phone) in
             do {
                 try realm.write {
@@ -147,12 +147,12 @@ extension Realm {
             } catch {
                 print("Error saving new Email Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewControler)
+        presenter.present(in: controller)
     }
     
-    static func edit(emailIndex: IndexPath, _ contact: Contact, _ tableView: UITableView, _ viewControler: UIViewController) {
+    static func edit(emailIndex: IndexPath, contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddEmailPresenter { (email) in
             do {
                 try realm.write {
@@ -161,12 +161,12 @@ extension Realm {
             } catch {
                 print("Error saving new Email Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewControler)
+        presenter.present(in: controller)
     }
     
-    static func edit(addressIndex: IndexPath, _ contact: Contact, _ tableView: UITableView, _ viewControler: UIViewController) {
+    static func edit(addressIndex: IndexPath, contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = AddAddressPresenter { (address) in
             do {
                 try realm.write {
@@ -175,12 +175,12 @@ extension Realm {
             } catch {
                 print("Error saving new Address:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewControler)
+        presenter.present(in: controller)
     }
     
-    static func handleName(_ contact: Contact, _ tableView: UITableView, _ viewController: UIViewController) {
+    static func handleName(contact: Contact, table: UITableView, controller: UIViewController) {
         let presenter = EditNamePresenter { (name) in
             do {
                 try realm.write {
@@ -189,8 +189,8 @@ extension Realm {
             } catch {
                 print("Error saving Name:", error)
             }
-            tableView.reloadData()
+            table.reloadData()
         }
-        presenter.present(in: viewController)
+        presenter.present(in: controller)
     }
 }
