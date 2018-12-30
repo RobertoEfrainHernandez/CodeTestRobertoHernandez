@@ -32,7 +32,7 @@ struct AddContactPresenter {
             lastNameField = field
         }
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone i.e.(888-888-888)"
+            field.placeholder = "Enter Phone i.e.(888-888-8888)"
             field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
             phoneField = field
         }
@@ -84,7 +84,7 @@ struct AddPhonePresenter {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone i.e.(888-888-888)"
+            field.placeholder = "Enter Phone i.e.(888-888-8888)"
             field.addTarget(self, action: #selector(alert.handleSingleTextChangedForPhone), for: .editingChanged)
             phoneField = field
         }

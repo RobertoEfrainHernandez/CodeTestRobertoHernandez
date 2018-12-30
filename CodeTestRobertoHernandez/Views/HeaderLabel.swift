@@ -29,8 +29,6 @@ class HeaderView: UIView {
         let image = UIImage(named: "Add Box Outline")!
         button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
         button.contentMode = .scaleAspectFit
-        button.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 20).isActive = true
         return button
     }()
     

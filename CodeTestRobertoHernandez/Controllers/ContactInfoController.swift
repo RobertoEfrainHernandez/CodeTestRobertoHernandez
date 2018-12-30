@@ -50,6 +50,10 @@ class ContactInfoController: UITableViewController {
         updateNavBar(.mainColor)
     }
     
+    deinit {
+        print("Print statement to test for any Retain Cycles")
+    }
+    
     //MARK:- Fileprivate and Selector Methods
     fileprivate func setTableView() {
         tableView.tableFooterView = UIView()
