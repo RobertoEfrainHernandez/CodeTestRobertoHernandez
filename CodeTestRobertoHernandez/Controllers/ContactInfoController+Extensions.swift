@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MessageUI
+import MapKit
 import RealmSwift
 import ChameleonFramework
 
@@ -86,5 +88,113 @@ extension ContactInfoController {
         default:
             contactInfoCell.infoLabel.text = ((addresses?.isEmpty)! || addresses == nil) ? "There are no Addresses" : addresses?[indexPath.row].address
         }
+    }
+}
+
+extension ContactInfoController: MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
+    
+    func showMail(for indexPath: IndexPath) {
+        guard MFMailComposeViewController.canSendMail() else {
+            print("This device can't send mail")
+            return
+        }
+        
+        let emailComposer = MFMailComposeViewController()
+        emailComposer.mailComposeDelegate = self
+        
+        if let email = emails?[indexPath.row].email {
+            emailComposer.setToRecipients([email])
+            emailComposer.setSubject("This is from the New Contacts App")
+            emailComposer.setMessageBody("Hello,\nThis New Contacts app is so cool, you should try it!", isHTML: false)
+        }
+        
+        present(emailComposer, animated: true)
+    }
+    
+    func showiMessage(for indexPath: IndexPath) {
+        guard MFMessageComposeViewController.canSendText() else {
+            print("This device can't send iMessages")
+            return
+        }
+        
+        let messageComposer = MFMessageComposeViewController()
+        messageComposer.messageComposeDelegate = self
+        
+        if let phoneNumber = phones?[indexPath.row].phoneNumber {
+            messageComposer.recipients = [phoneNumber]
+            messageComposer.body = "Hello!"
+        }
+        
+        present(messageComposer, animated: true)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if let error = error {
+            print("Error sending Email:", error.localizedDescription)
+            controller.dismiss(animated: true)
+            return
+        }
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed")
+        case .saved:
+            print("Saved")
+        default:
+            print("Sent")
+        }
+        
+        controller.dismiss(animated: true)
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed")
+        default:
+            print("Sent")
+        }
+        
+        controller.dismiss(animated: true)
+    }
+}
+
+extension ContactInfoController {
+    func showOpenInMaps(for indexPath: IndexPath) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Open in Maps", style: .default, handler: { [unowned self] (_) in
+            if let address = self.addresses?[indexPath.row].address {
+                self.coordinates(for: address)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
+    }
+    
+    fileprivate func coordinates(for address: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            if let error = error {
+                print("Geocoding Error:", error.localizedDescription)
+                return
+            }
+            
+            if let location = placemarks?.first?.location?.coordinate {
+                self.openMaps(forLat: location.latitude, forLong: location.longitude)
+            }
+        }
+    }
+    
+    fileprivate func openMaps(forLat lat: Double, forLong long: Double) {
+        let latitude: CLLocationDegrees = lat
+        let longitude: CLLocationDegrees = long
+        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinates))
+        mapItem.name = contact?.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
 }

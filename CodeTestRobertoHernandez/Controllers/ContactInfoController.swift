@@ -112,6 +112,17 @@ extension ContactInfoController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 2:
+            showiMessage(for: indexPath)
+        case 3:
+            showMail(for: indexPath)
+        default:
+            showOpenInMaps(for: indexPath)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
