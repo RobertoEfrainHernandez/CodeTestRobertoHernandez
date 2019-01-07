@@ -118,8 +118,10 @@ extension ContactInfoController {
             showiMessage(for: indexPath)
         case 3:
             showMail(for: indexPath)
-        default:
+        case 4:
             showOpenInMaps(for: indexPath)
+        default:
+            break
         }
     }
     
@@ -129,12 +131,12 @@ extension ContactInfoController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            self.deleteContactProperty(indexPath)
+            self.deleteContactItem(indexPath)
             self.contactInfoDelegate?.didUpdateContactInfo()
         }
         
         let edit = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
-            self.editContactProperty(indexPath)
+            self.editContactItem(indexPath)
             self.contactInfoDelegate?.didUpdateContactInfo()
         }
         contactColor = UIColor(hexString: contact?.color ?? "008B8B")!
@@ -150,20 +152,22 @@ extension ContactInfoController {
 
 //MARK:- Extension for Deleting and Editing Methods for TableViewRowAction
 extension ContactInfoController {
-    fileprivate func deleteContactProperty(_ indexPath: IndexPath) {
-        if let phones = phones, let emails = emails, let addresses = addresses {
+    fileprivate func deleteContactItem(_ indexPath: IndexPath) {
+        if let currentContact = contact {
             switch indexPath.section {
             case 2:
-                Realm.delete(phone: phones[indexPath.row], table: tableView)
+                Realm.delete(phone: currentContact.phoneNums[indexPath.row], table: tableView)
             case 3:
-                Realm.delete(email: emails[indexPath.row], table: tableView)
+                Realm.delete(email: currentContact.emails[indexPath.row], table: tableView)
+            case 4:
+               Realm.delete(address: currentContact.addresses[indexPath.row], table: tableView)
             default:
-                Realm.delete(address: addresses[indexPath.row], table: tableView)
+                break
             }
         }
     }
     
-    fileprivate func editContactProperty(_ indexPath: IndexPath) {
+    fileprivate func editContactItem(_ indexPath: IndexPath) {
         if let currentContact = contact {
             switch indexPath.section {
             case 0:
