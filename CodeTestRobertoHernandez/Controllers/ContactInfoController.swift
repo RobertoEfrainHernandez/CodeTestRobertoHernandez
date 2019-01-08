@@ -50,8 +50,8 @@ class ContactInfoController: UITableViewController {
         updateNavBar(.mainColor)
     }
     
-    deinit {
-        print("Print statement to test for any Retain Cycles")
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK:- Fileprivate and Selector Methods

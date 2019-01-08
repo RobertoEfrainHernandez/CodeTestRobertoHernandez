@@ -107,8 +107,9 @@ extension ContactInfoController: MFMailComposeViewControllerDelegate, MFMessageC
             emailComposer.setSubject("This is from the New Contacts App")
             emailComposer.setMessageBody("Hello,\nThis New Contacts app is so cool, you should try it!", isHTML: false)
         }
-        
-        present(emailComposer, animated: true)
+        DispatchQueue.main.async {
+            self.present(emailComposer, animated: true)
+        }
     }
     
     func showiMessage(for indexPath: IndexPath) {
@@ -124,8 +125,9 @@ extension ContactInfoController: MFMailComposeViewControllerDelegate, MFMessageC
             messageComposer.recipients = [phoneNumber]
             messageComposer.body = "Hello!"
         }
-        
-        present(messageComposer, animated: true)
+        DispatchQueue.main.async {
+            self.present(messageComposer, animated: true)
+        }
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -172,7 +174,9 @@ extension ContactInfoController {
             }
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(actionSheet, animated: true)
+        DispatchQueue.main.async {
+            self.present(actionSheet, animated: true)
+        }
     }
     
     fileprivate func coordinates(for address: String) {
