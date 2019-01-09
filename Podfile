@@ -6,5 +6,6 @@ target 'CodeTestRobertoHernandez' do
 
   # Pods for CodeTestRobertoHernandez
     pod 'RealmSwift'
+    pod 'SVProgressHUD'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 end

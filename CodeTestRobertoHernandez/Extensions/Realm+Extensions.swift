@@ -19,9 +19,10 @@ extension Realm {
                 realm.add(contact)
             }
         } catch {
-            print("Error saving contact:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
+        ContactHUD.showSuccess(withStatus: "Contact Added!")
     }
     
     static func delete(contact: Contact, table: UITableView) {
@@ -30,9 +31,10 @@ extension Realm {
                 realm.delete(contact)
             }
         } catch {
-            print("Error deleting contact:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
+        ContactHUD.showSuccess(withStatus: "Contact Deleted!")
     }
     
     //MARK:- Methods to use for Selector Methods in ContactInfoController
@@ -42,7 +44,7 @@ extension Realm {
                 contact.color = UIColor.randomFlat.hexValue()
             }
         } catch {
-            print("Error saving new Color:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
     }
@@ -54,9 +56,10 @@ extension Realm {
                     contact.birthday = birthday
                 }
             } catch {
-                print("Error saving Birthday:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Birthday was Updated!")
         }
         presenter.present(in: controller)
     }
@@ -68,9 +71,10 @@ extension Realm {
                     contact.phoneNums.append(phone)
                 }
             } catch {
-                print("Error saving new Email Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Phone Numbers were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -82,9 +86,10 @@ extension Realm {
                     contact.emails.append(email)
                 }
             } catch {
-                print("Error saving new Email Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Emails were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -96,9 +101,10 @@ extension Realm {
                     contact.addresses.append(address)
                 }
             } catch {
-                print("Error saving new Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Addresses were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -110,9 +116,10 @@ extension Realm {
                 realm.delete(phone)
             }
         } catch {
-            print("Error deleting Phone Numder:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
+        ContactHUD.showSuccess(withStatus: "Phone Number Deleted!")
     }
     
     static func delete(email: Email, table: UITableView) {
@@ -121,9 +128,10 @@ extension Realm {
                 realm.delete(email)
             }
         } catch {
-            print("Error deleting Email Address:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
+        ContactHUD.showSuccess(withStatus: "Email Deleted!")
     }
     
     static func delete(address: Address, table: UITableView) {
@@ -132,9 +140,10 @@ extension Realm {
                 realm.delete(address)
             }
         } catch {
-            print("Error deleting Address:", error)
+            ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
+        ContactHUD.showSuccess(withStatus: "Address Deleted!")
     }
     
     //MARK:- Editing Methods
@@ -145,9 +154,10 @@ extension Realm {
                     contact.phoneNums[phoneIndex.row] = phone
                 }
             } catch {
-                print("Error saving new Email Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Phone Numbers were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -159,9 +169,10 @@ extension Realm {
                     contact.emails[emailIndex.row] = email
                 }
             } catch {
-                print("Error saving new Email Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Emails were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -173,9 +184,10 @@ extension Realm {
                     contact.addresses[addressIndex.row] = address
                 }
             } catch {
-                print("Error saving new Address:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Addresses were Updated!")
         }
         presenter.present(in: controller)
     }
@@ -187,9 +199,10 @@ extension Realm {
                     contact.name = name
                 }
             } catch {
-                print("Error saving Name:", error)
+                ContactHUD.showError(withStatus: error.localizedDescription)
             }
             table.reloadData()
+            ContactHUD.showSuccess(withStatus: "Contact Name was Updated!")
         }
         presenter.present(in: controller)
     }

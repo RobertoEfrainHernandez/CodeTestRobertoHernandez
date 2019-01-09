@@ -23,22 +23,22 @@ struct AddContactPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter First Name"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             firstNameField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Last Name"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             lastNameField = field
         }
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone i.e.(888-888-8888)"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
+            field.placeholder = "Enter Phone as Ex. (888-888-8888)"
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             phoneField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Email"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddingContact), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             emailField = field
             emailField.keyboardType = .emailAddress
         }
@@ -47,13 +47,19 @@ struct AddContactPresenter {
             let newContact = Contact()
             let newPhone = Phone()
             let newEmail = Email()
-            newPhone.phoneNumber = phoneField.text!
-            newEmail.email = emailField.text!
-            newContact.name = "\(firstNameField.text!) \(lastNameField.text!)"
-            newContact.phoneNums.append(newPhone)
-            newContact.emails.append(newEmail)
-            newContact.color = UIColor.randomFlat.hexValue()
-            self.handler(newContact)
+            do {
+                let phone = try phoneField.validatedText(validationType: .phone)
+                let email = try emailField.validatedText(validationType: .email)
+                newPhone.phoneNumber = phone
+                newEmail.email = email
+                newContact.name = "\(firstNameField.text!) \(lastNameField.text!)"
+                newContact.phoneNums.append(newPhone)
+                newContact.emails.append(newEmail)
+                newContact.color = UIColor.randomFlat.hexValue()
+                self.handler(newContact)
+            } catch (let error) {
+                ContactHUD.showError(withStatus: (error as! ValidationError).message)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -77,19 +83,22 @@ struct AddPhonePresenter {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
             let newPhone = Phone()
-            newPhone.phoneNumber = phoneField.text!
-            self.handler(newPhone)
+            do {
+                let phone = try phoneField.validatedText(validationType: .phone)
+                newPhone.phoneNumber = phone
+                self.handler(newPhone)
+            } catch (let error) {
+                ContactHUD.showError(withStatus: (error as! ValidationError).message)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone i.e.(888-888-8888)"
-            field.addTarget(self, action: #selector(alert.handleSingleTextChangedForPhone), for: .editingChanged)
+            field.placeholder = "Enter Phone as Ex. (888-888-8888)"
             phoneField = field
         }
         
-        addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         viewController.present(alert, animated: true)
@@ -108,20 +117,23 @@ struct AddEmailPresenter {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
             let newEmail = Email()
-            newEmail.email = emailField.text!
-            self.handler(newEmail)
+            do {
+                let email = try emailField.validatedText(validationType: .email)
+                newEmail.email = email
+                self.handler(newEmail)
+            } catch (let error) {
+                ContactHUD.showError(withStatus: (error as! ValidationError).message)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
             field.placeholder = "Enter Email Address"
-            field.addTarget(self, action: #selector(alert.handleSingleTextChangedForEmail), for: .editingChanged)
             emailField = field
             emailField.keyboardType = .emailAddress
         }
         
-        addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         viewController.present(alert, animated: true)
@@ -145,29 +157,35 @@ struct AddAddressPresenter {
         
         alert.addTextField { (field) in
             field.placeholder = "Enter Street"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             streetField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter City"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             cityField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter State"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             stateField = field
         }
         alert.addTextField { (field) in
             field.placeholder = "Enter Zipcode"
-            field.addTarget(alert, action: #selector(alert.handleMultipleTextChangedForAddress), for: .editingChanged)
+            field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             zipField = field
         }
         
         let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
             let newAddress = Address()
-            newAddress.address = "\(streetField.text!)\n\(cityField.text!), \(stateField.text!) \(zipField.text!)"
-            self.handler(newAddress)
+            do {
+                let state = try stateField.validatedText(validationType: .state)
+                let zip = try zipField.validatedText(validationType: .zip)
+                newAddress.address = "\(streetField.text!)\n\(cityField.text!), \(state) \(zip)"
+                self.handler(newAddress)
+            } catch (let error) {
+                ContactHUD.showError(withStatus: (error as! ValidationError).message)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -190,18 +208,21 @@ struct AddBirthdayPresenter {
         var birthdayField = UITextField()
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { (_) in
-            self.handler("\(birthdayField.text!)")
+            do {
+                let birthday = try birthdayField.validatedText(validationType: .birthday)
+                self.handler("\(birthday)")
+            } catch (let error) {
+                ContactHUD.showError(withStatus: (error as! ValidationError).message)
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
-            field.placeholder = "Enter Birthday i.e.(August 25, 1990)"
-            field.addTarget(self, action: #selector(alert.handleSingleTextChangedForBirthday), for: .editingChanged)
+            field.placeholder = "Enter Birthday as Ex. (August 25, 1990)"
             birthdayField = field
         }
         
-        addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         viewController.present(alert, animated: true)

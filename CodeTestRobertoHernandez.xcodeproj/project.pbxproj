@@ -30,6 +30,9 @@
 		57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */; };
 		57E5F0AA21CB53FE00CAB8D0 /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5F0A921CB53FE00CAB8D0 /* Phone.swift */; };
 		57E5F0AC21CB547C00CAB8D0 /* Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5F0AB21CB547C00CAB8D0 /* Email.swift */; };
+		57E6677121E5A0E6002CC7E6 /* ContactHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6677021E5A0E6002CC7E6 /* ContactHUD.swift */; };
+		57E6677321E5A13C002CC7E6 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6677221E5A13C002CC7E6 /* Validators.swift */; };
+		57E6677521E5A5F9002CC7E6 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6677421E5A5F9002CC7E6 /* UITextField+Extensions.swift */; };
 		57F6E64821CAC63F00F8FD3E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6E64721CAC63F00F8FD3E /* Contact.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,9 @@
 		57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		57E5F0A921CB53FE00CAB8D0 /* Phone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
 		57E5F0AB21CB547C00CAB8D0 /* Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Email.swift; sourceTree = "<group>"; };
+		57E6677021E5A0E6002CC7E6 /* ContactHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHUD.swift; sourceTree = "<group>"; };
+		57E6677221E5A13C002CC7E6 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		57E6677421E5A5F9002CC7E6 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		57F6E64721CAC63F00F8FD3E /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9F40F622735506E32104469A /* Pods-CodeTestRobertoHernandez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeTestRobertoHernandez.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez.release.xcconfig"; sourceTree = "<group>"; };
 		EE4BC26EA7FAD63978A879EF /* Pods-CodeTestRobertoHernandez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeTestRobertoHernandez.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeTestRobertoHernandez/Pods-CodeTestRobertoHernandez.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +87,7 @@
 			children = (
 				576CA24C21CA324000A64823 /* ContactsCell.swift */,
 				57400DA021CCE588004D77F6 /* ContactInfoCell.swift */,
+				57E6677021E5A0E6002CC7E6 /* ContactHUD.swift */,
 				576CA24E21CA3E1200A64823 /* IconImageView.swift */,
 				576CA25021CA3E7000A64823 /* ContainerView.swift */,
 				57E5F0A521CB18AE00CAB8D0 /* AddContactPresenter.swift */,
@@ -116,6 +123,7 @@
 				57F6E64921CAC74D00F8FD3E /* Controllers */,
 				57E160A021C998F000DB9E8F /* Extensions */,
 				57E1608821C9829800DB9E8F /* AppDelegate.swift */,
+				57E6677221E5A13C002CC7E6 /* Validators.swift */,
 				57E1608C21C9829800DB9E8F /* Main.storyboard */,
 				57E1608F21C9829A00DB9E8F /* Assets.xcassets */,
 				57E1609121C9829A00DB9E8F /* LaunchScreen.storyboard */,
@@ -132,6 +140,7 @@
 				5702861E21D1767F007BD714 /* Realm+Extensions.swift */,
 				57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */,
 				57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */,
+				57E6677421E5A5F9002CC7E6 /* UITextField+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -271,12 +280,14 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -290,10 +301,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E6677521E5A5F9002CC7E6 /* UITextField+Extensions.swift in Sources */,
 				57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */,
 				5702861F21D1767F007BD714 /* Realm+Extensions.swift in Sources */,
 				57E1609B21C984F000DB9E8F /* UIView+Extensions.swift in Sources */,
 				57E5F0AC21CB547C00CAB8D0 /* Email.swift in Sources */,
+				57E6677321E5A13C002CC7E6 /* Validators.swift in Sources */,
 				57E1608B21C9829800DB9E8F /* ContactsController.swift in Sources */,
 				576CA24D21CA324000A64823 /* ContactsCell.swift in Sources */,
 				57E1608921C9829800DB9E8F /* AppDelegate.swift in Sources */,
@@ -302,6 +315,7 @@
 				57400DA121CCE588004D77F6 /* ContactInfoCell.swift in Sources */,
 				57F6E64821CAC63F00F8FD3E /* Contact.swift in Sources */,
 				570D4FFE21CC63A4002E12A1 /* ContactInfoController.swift in Sources */,
+				57E6677121E5A0E6002CC7E6 /* ContactHUD.swift in Sources */,
 				57A99DE221D58D2400062497 /* NoContactsLabel.swift in Sources */,
 				57E1609F21C9932E00DB9E8F /* UINavigationController+Extensions.swift in Sources */,
 				576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */,
