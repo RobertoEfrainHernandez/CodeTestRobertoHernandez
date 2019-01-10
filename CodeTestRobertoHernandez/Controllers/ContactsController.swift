@@ -19,7 +19,7 @@ class ContactsController: UITableViewController {
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setNavAttributes()
+        navigationController?.navigationBar.prefersLargeTitles = true
         setUpTableViewAndSearch()
         loadContacts()
     }
@@ -27,6 +27,7 @@ class ContactsController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNavAttributes()
+        ContactHUD.setColor(color: .mainColor)
         let searchField = searchController.searchBar.value(forKeyPath: "searchField") as? UITextField
         searchField?.textColor = .mainContrastColor
         searchField?.attributedPlaceholder = NSAttributedString(string: "Search For Contact", attributes: [.foregroundColor : UIColor.mainContrastColor])
@@ -58,7 +59,6 @@ class ContactsController: UITableViewController {
     /* Set Up UI for NavBar and Search */
     fileprivate func setNavAttributes() {
         let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : UIColor.mainContrastColor]
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.largeTitleTextAttributes = attributes

@@ -42,6 +42,7 @@ class ContactInfoController: UITableViewController {
         super.viewWillAppear(animated)
         let name = contact?.name ?? "John Doe"
         contactColor = UIColor(hexString: contact?.color ?? "C70039")!
+        ContactHUD.setColor(color: contactColor)
         title = name
         updateNavBar(contactColor)
     }
@@ -138,7 +139,6 @@ extension ContactInfoController {
         }
         contactColor = UIColor(hexString: contact?.color ?? "008B8B")!
         edit.backgroundColor = contactColor
-        
         if (indexPath.section == 0 || indexPath.section == 1) {
             return [edit]
         }
