@@ -45,10 +45,6 @@ class ContactInfoController: UITableViewController {
         title = name
         updateNavBar(contactColor)
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        updateNavBar(.mainColor)
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -63,12 +59,13 @@ class ContactInfoController: UITableViewController {
     
     fileprivate func updateNavBar(_ color: UIColor) {
         let contrast = ContrastColorOf(color, returnFlat: true)
-        guard let navBar = navigationController?.navigationBar else { fatalError("Navigation Controller does not exist")}
         let attributes : [NSAttributedString.Key : Any] = [.foregroundColor : contrast]
-        navBar.barTintColor = color
-        navBar.largeTitleTextAttributes = attributes
-        navBar.titleTextAttributes = attributes
-        navBar.tintColor = contrast
+        if let navBar = navigationController?.navigationBar {
+            navBar.barTintColor = color
+            navBar.titleTextAttributes = attributes
+            navBar.largeTitleTextAttributes = attributes
+            navBar.tintColor = contrast
+        }
     }
     
     fileprivate func loadPhoneEmailAddress() {

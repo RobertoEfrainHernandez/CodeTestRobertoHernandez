@@ -201,8 +201,8 @@ extension Realm {
             } catch {
                 ContactHUD.showError(withStatus: error.localizedDescription)
             }
+            controller.title = name
             table.reloadData()
-            controller.viewWillAppear(true)
             ContactHUD.showSuccess(withStatus: "Contact Name was Updated!")
         }
         presenter.present(in: controller)

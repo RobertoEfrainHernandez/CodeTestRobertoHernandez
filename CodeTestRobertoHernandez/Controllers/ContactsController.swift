@@ -19,13 +19,14 @@ class ContactsController: UITableViewController {
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavAttributes()
+        //setNavAttributes()
         setUpTableViewAndSearch()
         loadContacts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setNavAttributes()
         let searchField = searchController.searchBar.value(forKeyPath: "searchField") as? UITextField
         searchField?.textColor = .mainContrastColor
         searchField?.attributedPlaceholder = NSAttributedString(string: "Search For Contact", attributes: [.foregroundColor : UIColor.mainContrastColor])
