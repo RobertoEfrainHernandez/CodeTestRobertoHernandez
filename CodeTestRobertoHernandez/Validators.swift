@@ -42,17 +42,17 @@ enum ValidatorFactory {
 
 struct EmailValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard !value.isEmpty else { throw ValidationError("Email is Required") }
+        guard !value.isEmpty else { throw ValidationError("An Email was not entered") }
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         let result = emailTest.evaluate(with: value)
         
         do {
             if result == false {
-               throw ValidationError("Th Email is not Valid")
+               throw ValidationError("Please enter a valid Email")
             }
         } catch {
-            throw ValidationError("The Email is not Valid")
+            throw ValidationError("Please enter a valid Email")
         }
         return value
     }
@@ -60,25 +60,16 @@ struct EmailValidator: ValidatorConvertible {
 
 struct PhoneValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard !value.isEmpty else { throw ValidationError("Phone is Required") }
-        let phoneRegex = "^\\D?(\\d{3})\\D?\\D?(\\d{3})\\D?(\\d{4})$"
-        let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
-        let result = phoneTest.evaluate(with: value)
+        guard !value.isEmpty else { throw ValidationError("A Phone Number was not entered") }
+        guard value.count == 10 else { throw ValidationError("Phone Number must be 10 characters long") }
         
-        do {
-            if result == false {
-               throw ValidationError("Please format the Phone Number as \n(123) 245-7890\n123-456-7890\nor 1234567890")
-            }
-        } catch {
-            throw ValidationError("Please format the Phone Number as \n(123) 245-7890\n123-456-7890\nor 1234567890")
-        }
         return value
     }
 }
 
 struct BirthdayValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard !value.isEmpty else { throw ValidationError("Birthday is Required") }
+        guard !value.isEmpty else { throw ValidationError("A Birthday was not entered") }
         
         do {
             let dateFormatter = DateFormatter()
@@ -96,7 +87,7 @@ struct BirthdayValidator: ValidatorConvertible {
 
 struct StateValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard !value.isEmpty else { throw ValidationError("City is Required")}
+        guard !value.isEmpty else { throw ValidationError("A City was not entered")}
         let stateRex = "^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$"
         let stateTest = NSPredicate(format: "SELF MATCHES %@", stateRex)
         let result = stateTest.evaluate(with: value)
@@ -114,17 +105,17 @@ struct StateValidator: ValidatorConvertible {
 
 struct ZipValidator: ValidatorConvertible {
     func validated(_ value: String) throws -> String {
-        guard !value.isEmpty else { throw ValidationError("City is Required")}
+        guard !value.isEmpty else { throw ValidationError("A Zipcode was not entered")}
         let zipRex = "(^(?!0{5})(\\d{5})(?!-?0{4})(|-\\d{4})?$)"
         let zipTest = NSPredicate(format: "SELF MATCHES %@", zipRex)
         let result = zipTest.evaluate(with: value)
         
         do {
             if result == false {
-                throw ValidationError("Please provide a valid Zip Code Ex. (90210)")
+                throw ValidationError("Please provide a valid Zipcode Ex. (90210)")
             }
         } catch {
-            throw ValidationError("Please provide a valid Zip Code Ex. (90210)")
+            throw ValidationError("Please provide a valid Zipcode Ex. (90210)")
         }
         return value
     }

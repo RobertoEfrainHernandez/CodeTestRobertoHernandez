@@ -32,7 +32,8 @@ struct AddContactPresenter {
             lastNameField = field
         }
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone as Ex. (888-888-8888)"
+            field.placeholder = "Enter Phone Number"
+            field.keyboardType = .phonePad
             field.addTarget(alert, action: #selector(alert.handleMultipleTextChanged), for: .editingChanged)
             phoneField = field
         }
@@ -50,7 +51,7 @@ struct AddContactPresenter {
             do {
                 let phone = try phoneField.validatedText(validationType: .phone)
                 let email = try emailField.validatedText(validationType: .email)
-                newPhone.phoneNumber = phone
+                newPhone.phoneNumber = alert.format(phoneNumber: phone) ?? "(123) 456-7890"
                 newEmail.email = email
                 newContact.name = "\(firstNameField.text!) \(lastNameField.text!)"
                 newContact.phoneNums.append(newPhone)
@@ -85,7 +86,7 @@ struct AddPhonePresenter {
             let newPhone = Phone()
             do {
                 let phone = try phoneField.validatedText(validationType: .phone)
-                newPhone.phoneNumber = phone
+                newPhone.phoneNumber = alert.format(phoneNumber: phone) ?? "(123) 456-7890"
                 self.handler(newPhone)
             } catch (let error) {
                 ContactHUD.showError(withStatus: (error as! ValidationError).message)
@@ -95,7 +96,8 @@ struct AddPhonePresenter {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addTextField { (field) in
-            field.placeholder = "Enter Phone as Ex. (888-888-8888)"
+            field.placeholder = "Enter Phone Number"
+            field.keyboardType = .phonePad
             phoneField = field
         }
         

@@ -14,6 +14,7 @@
 		57400D9D21CCCF0A004D77F6 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57400D9C21CCCF0A004D77F6 /* Address.swift */; };
 		57400D9F21CCD534004D77F6 /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57400D9E21CCD534004D77F6 /* HeaderLabel.swift */; };
 		57400DA121CCE588004D77F6 /* ContactInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57400DA021CCE588004D77F6 /* ContactInfoCell.swift */; };
+		5761CE5021ED2AB700CBFC65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5761CE4F21ED2AB700CBFC65 /* String+Extensions.swift */; };
 		576CA24D21CA324000A64823 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA24C21CA324000A64823 /* ContactsCell.swift */; };
 		576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA24E21CA3E1200A64823 /* IconImageView.swift */; };
 		576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA25021CA3E7000A64823 /* ContainerView.swift */; };
@@ -43,6 +44,7 @@
 		57400D9C21CCCF0A004D77F6 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		57400D9E21CCD534004D77F6 /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
 		57400DA021CCE588004D77F6 /* ContactInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoCell.swift; sourceTree = "<group>"; };
+		5761CE4F21ED2AB700CBFC65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		576CA24C21CA324000A64823 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		576CA24E21CA3E1200A64823 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		576CA25021CA3E7000A64823 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				5702861E21D1767F007BD714 /* Realm+Extensions.swift */,
 				57E1609E21C9932E00DB9E8F /* UINavigationController+Extensions.swift */,
 				57E5F0A721CB2A4600CAB8D0 /* UIAlertController+Extensions.swift */,
+				5761CE4F21ED2AB700CBFC65 /* String+Extensions.swift */,
 				57E6677421E5A5F9002CC7E6 /* UITextField+Extensions.swift */,
 			);
 			path = Extensions;
@@ -305,6 +308,7 @@
 				57E5F0A821CB2A4600CAB8D0 /* UIAlertController+Extensions.swift in Sources */,
 				5702861F21D1767F007BD714 /* Realm+Extensions.swift in Sources */,
 				57E1609B21C984F000DB9E8F /* UIView+Extensions.swift in Sources */,
+				5761CE5021ED2AB700CBFC65 /* String+Extensions.swift in Sources */,
 				57E5F0AC21CB547C00CAB8D0 /* Email.swift in Sources */,
 				57E6677321E5A13C002CC7E6 /* Validators.swift in Sources */,
 				57E1608B21C9829800DB9E8F /* ContactsController.swift in Sources */,
