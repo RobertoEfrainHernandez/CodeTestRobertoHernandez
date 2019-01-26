@@ -20,6 +20,7 @@
 		576CA25121CA3E7000A64823 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576CA25021CA3E7000A64823 /* ContainerView.swift */; };
 		57A212C221D5820000E51FF6 /* ContactInfoController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A212C121D5820000E51FF6 /* ContactInfoController+Extensions.swift */; };
 		57A99DE221D58D2400062497 /* NoContactsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A99DE121D58D2400062497 /* NoContactsLabel.swift */; };
+		57AAF9FD21ED7C4C002611CB /* InnerGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AAF9FC21ED7C4C002611CB /* InnerGradientView.swift */; };
 		57E1608921C9829800DB9E8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1608821C9829800DB9E8F /* AppDelegate.swift */; };
 		57E1608B21C9829800DB9E8F /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1608A21C9829800DB9E8F /* ContactsController.swift */; };
 		57E1608E21C9829800DB9E8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57E1608C21C9829800DB9E8F /* Main.storyboard */; };
@@ -50,6 +51,7 @@
 		576CA25021CA3E7000A64823 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		57A212C121D5820000E51FF6 /* ContactInfoController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactInfoController+Extensions.swift"; sourceTree = "<group>"; };
 		57A99DE121D58D2400062497 /* NoContactsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContactsLabel.swift; sourceTree = "<group>"; };
+		57AAF9FC21ED7C4C002611CB /* InnerGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerGradientView.swift; sourceTree = "<group>"; };
 		57E1608521C9829800DB9E8F /* CodeTestRobertoHernandez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeTestRobertoHernandez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57E1608821C9829800DB9E8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57E1608A21C9829800DB9E8F /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				57E6677021E5A0E6002CC7E6 /* ContactHUD.swift */,
 				576CA24E21CA3E1200A64823 /* IconImageView.swift */,
 				576CA25021CA3E7000A64823 /* ContainerView.swift */,
+				57AAF9FC21ED7C4C002611CB /* InnerGradientView.swift */,
 				57E5F0A521CB18AE00CAB8D0 /* AddContactPresenter.swift */,
 				57400D9E21CCD534004D77F6 /* HeaderLabel.swift */,
 				57A99DE121D58D2400062497 /* NoContactsLabel.swift */,
@@ -327,6 +330,7 @@
 				576CA24F21CA3E1200A64823 /* IconImageView.swift in Sources */,
 				57E5F0A621CB18AE00CAB8D0 /* AddContactPresenter.swift in Sources */,
 				5702861D21D16E92007BD714 /* UIColor+Extensions.swift in Sources */,
+				57AAF9FD21ED7C4C002611CB /* InnerGradientView.swift in Sources */,
 				57E5F0AA21CB53FE00CAB8D0 /* Phone.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

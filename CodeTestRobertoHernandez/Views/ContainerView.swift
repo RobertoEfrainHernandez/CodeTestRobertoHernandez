@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ChameleonFramework
 
 class ContainerView: UIView {
     
@@ -22,5 +21,4 @@ class ContainerView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

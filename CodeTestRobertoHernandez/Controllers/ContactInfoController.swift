@@ -153,11 +153,11 @@ extension ContactInfoController {
         if let currentContact = contact {
             switch indexPath.section {
             case 2:
-                Realm.delete(phone: currentContact.phoneNums[indexPath.row], table: tableView)
+                Realm.delete(realmObject: currentContact.phoneNums[indexPath.row], table: tableView)
             case 3:
-                Realm.delete(email: currentContact.emails[indexPath.row], table: tableView)
+                Realm.delete(realmObject: currentContact.emails[indexPath.row], table: tableView)
             case 4:
-               Realm.delete(address: currentContact.addresses[indexPath.row], table: tableView)
+               Realm.delete(realmObject: currentContact.addresses[indexPath.row], table: tableView)
             default:
                 break
             }

@@ -127,7 +127,7 @@ extension ContactsController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { [unowned self] (_, indexPath) in
             if let contacts = self.contacts {
-                Realm.delete(contact: contacts[indexPath.row], table: self.tableView)
+                Realm.delete(realmObject: contacts[indexPath.row], table: self.tableView)
             }
         }
         return [delete]

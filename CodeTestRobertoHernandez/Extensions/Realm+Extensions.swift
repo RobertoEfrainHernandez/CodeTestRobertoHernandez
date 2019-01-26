@@ -25,18 +25,6 @@ extension Realm {
         ContactHUD.showSuccess(withStatus: "Contact Added!")
     }
     
-    static func delete(contact: Contact, table: UITableView) {
-        do {
-            try realm.write {
-                realm.delete(contact)
-            }
-        } catch {
-            ContactHUD.showError(withStatus: error.localizedDescription)
-        }
-        table.reloadData()
-        ContactHUD.showSuccess(withStatus: "Contact Deleted!")
-    }
-    
     //MARK:- Methods to use for Selector Methods in ContactInfoController
     static func changeColor(contact: Contact, table: UITableView) {
         do {
@@ -109,41 +97,17 @@ extension Realm {
         presenter.present(in: controller)
     }
     
-    //MARK:- Deleting Methods
-    static func delete(phone: Phone, table: UITableView) {
+    //MARK:- Deleting Method using Generics
+    static func delete<T>(realmObject: T, table: UITableView) {
         do {
             try realm.write {
-                realm.delete(phone)
+                realm.delete(realmObject as! Object)
             }
         } catch {
             ContactHUD.showError(withStatus: error.localizedDescription)
         }
         table.reloadData()
-        ContactHUD.showSuccess(withStatus: "Phone Number Deleted!")
-    }
-    
-    static func delete(email: Email, table: UITableView) {
-        do {
-            try realm.write {
-                realm.delete(email)
-            }
-        } catch {
-            ContactHUD.showError(withStatus: error.localizedDescription)
-        }
-        table.reloadData()
-        ContactHUD.showSuccess(withStatus: "Email Deleted!")
-    }
-    
-    static func delete(address: Address, table: UITableView) {
-        do {
-            try realm.write {
-                realm.delete(address)
-            }
-        } catch {
-            ContactHUD.showError(withStatus: error.localizedDescription)
-        }
-        table.reloadData()
-        ContactHUD.showSuccess(withStatus: "Address Deleted!")
+        ContactHUD.showSuccess(withStatus: "Deleted!")
     }
     
     //MARK:- Editing Methods
